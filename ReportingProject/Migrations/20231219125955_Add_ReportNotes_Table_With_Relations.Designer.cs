@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReportingProject.Data.Contextes;
 
@@ -11,9 +12,11 @@ using ReportingProject.Data.Contextes;
 namespace ReportingProject.Migrations
 {
     [DbContext(typeof(ReportingDBContext))]
-    partial class ReportingDBContextModelSnapshot : ModelSnapshot
+    [Migration("20231219125955_Add_ReportNotes_Table_With_Relations")]
+    partial class Add_ReportNotes_Table_With_Relations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -420,10 +423,6 @@ namespace ReportingProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ISOCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -683,7 +682,7 @@ namespace ReportingProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("ApprovalStatusId")
+                    b.Property<int>("ApprovalStatusId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DueDate")
@@ -952,11 +951,11 @@ namespace ReportingProject.Migrations
 
             modelBuilder.Entity("ReportingProject.Data.Entities.Revenue", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<decimal>("MerchantRevenue")
                         .HasColumnType("decimal(18,2)");
@@ -982,7 +981,7 @@ namespace ReportingProject.Migrations
                     b.Property<int>("Year")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.HasIndex("ServiceId");
 
@@ -1049,7 +1048,7 @@ namespace ReportingProject.Migrations
                     b.Property<int?>("ServiceStatusId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ShortCode")
+                    b.Property<int>("ShortCode")
                         .HasColumnType("int");
 
                     b.HasKey("ServiceId", "OperatorId");
@@ -1333,7 +1332,9 @@ namespace ReportingProject.Migrations
                 {
                     b.HasOne("ReportingProject.Data.Entities.ApprovalStatus", "ApprovalStatus")
                         .WithMany("MerchantInvoices")
-                        .HasForeignKey("ApprovalStatusId");
+                        .HasForeignKey("ApprovalStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ReportingProject.Data.Entities.Invoice", null)
                         .WithOne("MerchantInvoice")

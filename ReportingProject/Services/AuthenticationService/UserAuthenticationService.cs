@@ -1,5 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using MailKit.Net.Smtp;
+using MailKit.Security;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using MimeKit;
+using MimeKit.Text;
+using PasswordGenerator;
+using ReportingProject.Data.Entities;
 using ReportingProject.Data.Models;
 using ReportingProject.Data.Resources;
 using System.IdentityModel.Tokens.Jwt;
@@ -10,11 +16,11 @@ namespace ReportingProject.Services.AuthenticationService
 {
     public class UserAuthenticationService : IUserAuthenticationService
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _config;
 
-        public UserAuthenticationService(UserManager<IdentityUser> userManager, IConfiguration config, RoleManager<IdentityRole> roleManager)
+        public UserAuthenticationService(UserManager<ApplicationUser> userManager, IConfiguration config, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _config = config;
@@ -23,41 +29,41 @@ namespace ReportingProject.Services.AuthenticationService
 
         public async Task<bool> Login(LoginModel loginModel)
         {
-            var identityUser = await _userManager.FindByNameAsync(loginModel.Username);
+            var applicationUser = await _userManager.FindByNameAsync(loginModel.Username);
 
-            if (identityUser is null)
+            if (applicationUser is null)
             {
                 return false;
             }
 
-            return await _userManager.CheckPasswordAsync(identityUser, loginModel.Password);
+            return await _userManager.CheckPasswordAsync(applicationUser, loginModel.Password);
         }
 
-        public async Task<bool> RegisterUser(LoginModel loginModel)
+        public async Task<bool> RegisterUser(RegisterModel registerModel)
         {
-            var identityUser = new IdentityUser
+            var applicationUser = new ApplicationUser
             {
-                UserName = loginModel.Username,
+                UserName = registerModel.Username,
+                Email = registerModel.Email,
+                IsActive = true,
             };
 
-            var result = await _userManager.CreateAsync(identityUser, loginModel.Password);
+            var result = await _userManager.CreateAsync(applicationUser, registerModel.Password);
 
             if (result.Succeeded)
             {
                 //Please change it !!!
-                // If user creation is successful, add the user to the specified role
-                var addToRoleResult = await _userManager.AddToRoleAsync(identityUser, "Admin");
+                //var addToRoleResult = await _userManager.AddToRoleAsync(identityUser, "Admin");
 
-                if (!addToRoleResult.Succeeded)
-                {
-                    // Handle the error (e.g., log it, return false, etc.)
-                    return false;
-                }
+                //if (!addToRoleResult.Succeeded)
+                //{
+                //    return false;
+                //}
             }
             return result.Succeeded;
         }
 
-        public AccessData GenerateToken(LoginModel loginModel)
+        public AccessDataResource GenerateToken(LoginModel loginModel)
         {
             var user = _userManager.FindByNameAsync(loginModel.Username).Result;
 
@@ -83,7 +89,7 @@ namespace ReportingProject.Services.AuthenticationService
                 audience: _config.GetSection("Jwt:Audience").Value,
                 signingCredentials: signingCred);
 
-            var accessData = new AccessData
+            var accessData = new AccessDataResource
             {
                 AccessToken = new JwtSecurityTokenHandler().WriteToken(securityToken),
                 UserRole = userRoles.FirstOrDefault() ?? ""
@@ -94,11 +100,45 @@ namespace ReportingProject.Services.AuthenticationService
 
         public async Task<bool> ForgetPassword(ForgetPasswordModel forgetPasswordModel)
         {
-            var userEmail = await _userManager.FindByEmailAsync(forgetPasswordModel.Email);
-            if(userEmail?.Email == null)
+            var user = await _userManager.FindByEmailAsync(forgetPasswordModel.Email);
+            if (user == null || user.Email == null)
             {
                 return false;
             }
+            try
+            {
+                //Generate a new password
+                var pwd = new Password(8).IncludeLowercase().IncludeUppercase().IncludeSpecial().IncludeNumeric();
+                var generatedPassword = pwd.Next();
+
+                // Update the user's password
+                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                var result = await _userManager.ResetPasswordAsync(user, token, generatedPassword);
+
+                if (!result.Succeeded)
+                {
+                    return false;
+                }
+
+                var email = new MimeMessage();
+                email.From.Add(MailboxAddress.Parse("example@we-universe.com"));
+                email.To.Add(MailboxAddress.Parse(user.Email));
+                email.Subject = "Forget Password";
+                email.Body = new TextPart(TextFormat.Html) { Text ="Your new password: " + generatedPassword };
+
+                using var smtp = new SmtpClient();
+                smtp.Connect("smtp.office365.com", 587, SecureSocketOptions.StartTls);
+                smtp.Authenticate("example@we-universe.com", "Password");
+                smtp.Send(email);
+                smtp.Disconnect(true);
+                smtp.Dispose();
+            }
+
+            catch (Exception)
+            {
+                return false;
+            }
+
 
             return true;
         }

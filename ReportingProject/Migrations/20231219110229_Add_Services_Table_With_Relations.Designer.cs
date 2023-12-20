@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReportingProject.Data.Contextes;
 
@@ -11,9 +12,11 @@ using ReportingProject.Data.Contextes;
 namespace ReportingProject.Migrations
 {
     [DbContext(typeof(ReportingDBContext))]
-    partial class ReportingDBContextModelSnapshot : ModelSnapshot
+    [Migration("20231219110229_Add_Services_Table_With_Relations")]
+    partial class Add_Services_Table_With_Relations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -289,13 +292,13 @@ namespace ReportingProject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CountryId")
+                    b.Property<int?>("CountryID")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("CreationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("CurrencyId")
+                    b.Property<int?>("CurrencyID")
                         .HasColumnType("int");
 
                     b.Property<int>("Fax")
@@ -317,9 +320,9 @@ namespace ReportingProject.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CountryId");
+                    b.HasIndex("CountryID");
 
-                    b.HasIndex("CurrencyId");
+                    b.HasIndex("CurrencyID");
 
                     b.ToTable("Companies");
                 });
@@ -392,7 +395,7 @@ namespace ReportingProject.Migrations
                     b.Property<byte[]>("ContractFile")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<int?>("MerchantId")
+                    b.Property<int>("MerchantId")
                         .HasColumnType("int");
 
                     b.Property<string>("Notes")
@@ -419,10 +422,6 @@ namespace ReportingProject.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ISOCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -512,10 +511,10 @@ namespace ReportingProject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ClientId")
+                    b.Property<int?>("ClientID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CountryId")
+                    b.Property<int?>("CountryID")
                         .HasColumnType("int");
 
                     b.Property<string>("IBAN")
@@ -537,9 +536,9 @@ namespace ReportingProject.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("ClientId");
+                    b.HasIndex("ClientID");
 
-                    b.HasIndex("CountryId");
+                    b.HasIndex("CountryID");
 
                     b.ToTable("FinancialAccounts");
                 });
@@ -617,7 +616,7 @@ namespace ReportingProject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("InvoiceId")
+                    b.Property<int>("InvoiceId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -683,16 +682,16 @@ namespace ReportingProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("ApprovalStatusId")
+                    b.Property<int>("ApprovalStatusId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("InvoiceId")
+                    b.Property<int>("InvoiceId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("MerchantId")
+                    b.Property<int>("MerchantId")
                         .HasColumnType("int");
 
                     b.Property<string>("Services")
@@ -704,8 +703,7 @@ namespace ReportingProject.Migrations
                     b.HasIndex("ApprovalStatusId");
 
                     b.HasIndex("InvoiceId")
-                        .IsUnique()
-                        .HasFilter("[InvoiceId] IS NOT NULL");
+                        .IsUnique();
 
                     b.HasIndex("MerchantId");
 
@@ -720,10 +718,10 @@ namespace ReportingProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("MerchantId")
+                    b.Property<int>("MerchantId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ReportId")
+                    b.Property<int>("ReportId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -731,8 +729,7 @@ namespace ReportingProject.Migrations
                     b.HasIndex("MerchantId");
 
                     b.HasIndex("ReportId")
-                        .IsUnique()
-                        .HasFilter("[ReportId] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("MerchantReports");
                 });
@@ -850,13 +847,13 @@ namespace ReportingProject.Migrations
                     b.Property<byte[]>("MWFile")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<int?>("OperatorId")
+                    b.Property<int>("OperatorId")
                         .HasColumnType("int");
 
                     b.Property<byte[]>("RefundFile")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<int?>("ReportId")
+                    b.Property<int>("ReportId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -864,8 +861,7 @@ namespace ReportingProject.Migrations
                     b.HasIndex("OperatorId");
 
                     b.HasIndex("ReportId")
-                        .IsUnique()
-                        .HasFilter("[ReportId] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("OperatorReports");
                 });
@@ -894,7 +890,7 @@ namespace ReportingProject.Migrations
                     b.Property<byte[]>("ReportFile")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<int?>("ReportTypeId")
+                    b.Property<int>("ReportTypeId")
                         .HasColumnType("int");
 
                     b.Property<int>("Year")
@@ -909,28 +905,6 @@ namespace ReportingProject.Migrations
                     b.HasIndex("Month", "Year");
 
                     b.ToTable("Reports");
-                });
-
-            modelBuilder.Entity("ReportingProject.Data.Entities.ReportNote", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ReportId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ReportId");
-
-                    b.ToTable("ReportNotes");
                 });
 
             modelBuilder.Entity("ReportingProject.Data.Entities.ReportType", b =>
@@ -950,47 +924,6 @@ namespace ReportingProject.Migrations
                     b.ToTable("ReportTypes");
                 });
 
-            modelBuilder.Entity("ReportingProject.Data.Entities.Revenue", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<decimal>("MerchantRevenue")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("Month")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PostSubscriptions")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Refund")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int?>("ServiceId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TotalSubscriptions")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("UniverseRevenue")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("Year")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ServiceId");
-
-                    b.HasIndex("Month", "Year");
-
-                    b.ToTable("Revenues");
-                });
-
             modelBuilder.Entity("ReportingProject.Data.Entities.Service", b =>
                 {
                     b.Property<int>("Id")
@@ -999,66 +932,24 @@ namespace ReportingProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("ContractId")
+                    b.Property<int>("ContractId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ServiceTypeId")
+                    b.Property<int>("ServiceTypeId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ContractId")
-                        .IsUnique()
-                        .HasFilter("[ContractId] IS NOT NULL");
+                        .IsUnique();
 
                     b.HasIndex("ServiceTypeId");
 
                     b.ToTable("Services");
-                });
-
-            modelBuilder.Entity("ReportingProject.Data.Entities.ServiceOperator", b =>
-                {
-                    b.Property<int?>("ServiceId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("OperatorId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("LaunchDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<byte[]>("MTITFile")
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<int>("MWRef")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("OperatorShare")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("PostPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("PrePrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int?>("ServiceStatusId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ShortCode")
-                        .HasColumnType("int");
-
-                    b.HasKey("ServiceId", "OperatorId");
-
-                    b.HasIndex("OperatorId");
-
-                    b.HasIndex("ServiceStatusId");
-
-                    b.ToTable("ServiceOperators");
                 });
 
             modelBuilder.Entity("ReportingProject.Data.Entities.ServiceStatus", b =>
@@ -1121,44 +1012,6 @@ namespace ReportingProject.Migrations
                     b.HasIndex("OperatorId");
 
                     b.ToTable("UniverseInvoices");
-                });
-
-            modelBuilder.Entity("ReportingProject.Data.Entities.UserSession", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("MachineAddress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserAgent")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserHostAddress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserHostName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.ToTable("UserSessions");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -1235,11 +1088,11 @@ namespace ReportingProject.Migrations
                 {
                     b.HasOne("ReportingProject.Data.Entities.Country", "Country")
                         .WithMany("Companies")
-                        .HasForeignKey("CountryId");
+                        .HasForeignKey("CountryID");
 
                     b.HasOne("ReportingProject.Data.Entities.Currency", "Currency")
                         .WithMany("Companies")
-                        .HasForeignKey("CurrencyId");
+                        .HasForeignKey("CurrencyID");
 
                     b.Navigation("Country");
 
@@ -1268,7 +1121,9 @@ namespace ReportingProject.Migrations
                 {
                     b.HasOne("ReportingProject.Data.Entities.Merchant", "Merchant")
                         .WithMany("Contracts")
-                        .HasForeignKey("MerchantId");
+                        .HasForeignKey("MerchantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Merchant");
                 });
@@ -1277,11 +1132,11 @@ namespace ReportingProject.Migrations
                 {
                     b.HasOne("ReportingProject.Data.Entities.Client", "Client")
                         .WithMany("FinancialAccount")
-                        .HasForeignKey("ClientId");
+                        .HasForeignKey("ClientID");
 
                     b.HasOne("ReportingProject.Data.Entities.Country", "Country")
                         .WithMany("FinancialAccounts")
-                        .HasForeignKey("CountryId");
+                        .HasForeignKey("CountryID");
 
                     b.Navigation("Client");
 
@@ -1303,7 +1158,9 @@ namespace ReportingProject.Migrations
                 {
                     b.HasOne("ReportingProject.Data.Entities.Invoice", "Invoice")
                         .WithMany("InvoiceNotes")
-                        .HasForeignKey("InvoiceId");
+                        .HasForeignKey("InvoiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Invoice");
                 });
@@ -1333,15 +1190,21 @@ namespace ReportingProject.Migrations
                 {
                     b.HasOne("ReportingProject.Data.Entities.ApprovalStatus", "ApprovalStatus")
                         .WithMany("MerchantInvoices")
-                        .HasForeignKey("ApprovalStatusId");
+                        .HasForeignKey("ApprovalStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ReportingProject.Data.Entities.Invoice", null)
                         .WithOne("MerchantInvoice")
-                        .HasForeignKey("ReportingProject.Data.Entities.MerchantInvoice", "InvoiceId");
+                        .HasForeignKey("ReportingProject.Data.Entities.MerchantInvoice", "InvoiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ReportingProject.Data.Entities.Merchant", null)
                         .WithMany("MerchantInvoices")
-                        .HasForeignKey("MerchantId");
+                        .HasForeignKey("MerchantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("ApprovalStatus");
                 });
@@ -1350,11 +1213,15 @@ namespace ReportingProject.Migrations
                 {
                     b.HasOne("ReportingProject.Data.Entities.Merchant", "Merchant")
                         .WithMany("MerchantReports")
-                        .HasForeignKey("MerchantId");
+                        .HasForeignKey("MerchantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ReportingProject.Data.Entities.Report", "Report")
                         .WithOne("MerchantReport")
-                        .HasForeignKey("ReportingProject.Data.Entities.MerchantReport", "ReportId");
+                        .HasForeignKey("ReportingProject.Data.Entities.MerchantReport", "ReportId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Merchant");
 
@@ -1397,11 +1264,15 @@ namespace ReportingProject.Migrations
                 {
                     b.HasOne("ReportingProject.Data.Entities.Operator", "Operator")
                         .WithMany("OperatorReports")
-                        .HasForeignKey("OperatorId");
+                        .HasForeignKey("OperatorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ReportingProject.Data.Entities.Report", "Report")
                         .WithOne("OperatorReport")
-                        .HasForeignKey("ReportingProject.Data.Entities.OperatorReport", "ReportId");
+                        .HasForeignKey("ReportingProject.Data.Entities.OperatorReport", "ReportId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Operator");
 
@@ -1418,69 +1289,32 @@ namespace ReportingProject.Migrations
 
                     b.HasOne("ReportingProject.Data.Entities.ReportType", "ReportType")
                         .WithMany("Reports")
-                        .HasForeignKey("ReportTypeId");
+                        .HasForeignKey("ReportTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("ApprovalStatus");
 
                     b.Navigation("ReportType");
                 });
 
-            modelBuilder.Entity("ReportingProject.Data.Entities.ReportNote", b =>
-                {
-                    b.HasOne("ReportingProject.Data.Entities.Report", "Report")
-                        .WithMany("ReportNotes")
-                        .HasForeignKey("ReportId");
-
-                    b.Navigation("Report");
-                });
-
-            modelBuilder.Entity("ReportingProject.Data.Entities.Revenue", b =>
-                {
-                    b.HasOne("ReportingProject.Data.Entities.Service", "Service")
-                        .WithMany("Revenues")
-                        .HasForeignKey("ServiceId");
-
-                    b.Navigation("Service");
-                });
-
             modelBuilder.Entity("ReportingProject.Data.Entities.Service", b =>
                 {
                     b.HasOne("ReportingProject.Data.Entities.Contract", "Contract")
                         .WithOne("Service")
-                        .HasForeignKey("ReportingProject.Data.Entities.Service", "ContractId");
+                        .HasForeignKey("ReportingProject.Data.Entities.Service", "ContractId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ReportingProject.Data.Entities.ServiceType", "ServiceType")
                         .WithMany("Services")
-                        .HasForeignKey("ServiceTypeId");
+                        .HasForeignKey("ServiceTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Contract");
 
                     b.Navigation("ServiceType");
-                });
-
-            modelBuilder.Entity("ReportingProject.Data.Entities.ServiceOperator", b =>
-                {
-                    b.HasOne("ReportingProject.Data.Entities.Operator", "Operator")
-                        .WithMany("ServiceOperators")
-                        .HasForeignKey("OperatorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ReportingProject.Data.Entities.Service", "Service")
-                        .WithMany("ServiceOperators")
-                        .HasForeignKey("ServiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ReportingProject.Data.Entities.ServiceStatus", "ServiceStatus")
-                        .WithMany("ServiceOperators")
-                        .HasForeignKey("ServiceStatusId");
-
-                    b.Navigation("Operator");
-
-                    b.Navigation("Service");
-
-                    b.Navigation("ServiceStatus");
                 });
 
             modelBuilder.Entity("ReportingProject.Data.Entities.UniverseInvoice", b =>
@@ -1498,22 +1332,11 @@ namespace ReportingProject.Migrations
                     b.Navigation("Operator");
                 });
 
-            modelBuilder.Entity("ReportingProject.Data.Entities.UserSession", b =>
-                {
-                    b.HasOne("ReportingProject.Data.Entities.ApplicationUser", "ApplicationUser")
-                        .WithMany("UserSessions")
-                        .HasForeignKey("ApplicationUserId");
-
-                    b.Navigation("ApplicationUser");
-                });
-
             modelBuilder.Entity("ReportingProject.Data.Entities.ApplicationUser", b =>
                 {
                     b.Navigation("ReceivedNotifications");
 
                     b.Navigation("SentNotifications");
-
-                    b.Navigation("UserSessions");
                 });
 
             modelBuilder.Entity("ReportingProject.Data.Entities.ApprovalStatus", b =>
@@ -1605,8 +1428,6 @@ namespace ReportingProject.Migrations
                 {
                     b.Navigation("OperatorReports");
 
-                    b.Navigation("ServiceOperators");
-
                     b.Navigation("UniverseInvoices");
                 });
 
@@ -1615,25 +1436,11 @@ namespace ReportingProject.Migrations
                     b.Navigation("MerchantReport");
 
                     b.Navigation("OperatorReport");
-
-                    b.Navigation("ReportNotes");
                 });
 
             modelBuilder.Entity("ReportingProject.Data.Entities.ReportType", b =>
                 {
                     b.Navigation("Reports");
-                });
-
-            modelBuilder.Entity("ReportingProject.Data.Entities.Service", b =>
-                {
-                    b.Navigation("Revenues");
-
-                    b.Navigation("ServiceOperators");
-                });
-
-            modelBuilder.Entity("ReportingProject.Data.Entities.ServiceStatus", b =>
-                {
-                    b.Navigation("ServiceOperators");
                 });
 
             modelBuilder.Entity("ReportingProject.Data.Entities.ServiceType", b =>

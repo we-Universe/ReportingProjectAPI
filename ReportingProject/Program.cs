@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using ReportingProject.Data.Contextes;
+using ReportingProject.Data.Entities;
 using ReportingProject.Services.AuthenticationService;
 using System.Text;
 
@@ -14,7 +15,7 @@ builder.Services.AddDbContext<ReportingDBContext>(options =>
     options.UseSqlServer(builder.Configuration.GetSection("ConnectionStrings:DefaultConnection").Value);
 });
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
     options.Password.RequiredLength = 4;
 }).AddEntityFrameworkStores<ReportingDBContext>()

@@ -16,9 +16,9 @@ namespace ReportingProject.Controllers
         }
 
         [HttpPost("Register")]
-        public async Task<IActionResult> RegisterUser(LoginModel loginModel)
+        public async Task<IActionResult> RegisterUser(RegisterModel registerModel)
         {
-            if (await _userAuthenticationService.RegisterUser(loginModel))
+            if (await _userAuthenticationService.RegisterUser(registerModel))
             {
                 return Ok("User registered successfuly");
             }
@@ -41,10 +41,10 @@ namespace ReportingProject.Controllers
         {
             if (await _userAuthenticationService.ForgetPassword(forgetPasswordModel))
             {
-                return Ok("Invalid username or password !!");
+                return Ok("A new password sent successfully, please check your email");
 
             }
-                return  BadRequest("Invalid username or password !!");
+                return BadRequest("An error occurred, please try later");
         }
 
 

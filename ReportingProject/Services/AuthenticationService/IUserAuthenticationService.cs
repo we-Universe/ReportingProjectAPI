@@ -5,9 +5,9 @@ namespace ReportingProject.Services.AuthenticationService
 {
     public interface IUserAuthenticationService
     {
-        AccessData GenerateToken(LoginModel loginModel);
+        AccessDataResource GenerateToken(LoginModel loginModel);
         Task<bool> Login(LoginModel loginModel);
-        Task<bool> RegisterUser(LoginModel loginModel);
+        Task<bool> RegisterUser(RegisterModel registerModel);
         Task<bool> ForgetPassword(ForgetPasswordModel forgetPasswordModel);
     }
 }

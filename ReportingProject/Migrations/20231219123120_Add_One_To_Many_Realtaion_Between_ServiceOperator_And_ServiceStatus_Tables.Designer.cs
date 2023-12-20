@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReportingProject.Data.Contextes;
 
@@ -11,9 +12,11 @@ using ReportingProject.Data.Contextes;
 namespace ReportingProject.Migrations
 {
     [DbContext(typeof(ReportingDBContext))]
-    partial class ReportingDBContextModelSnapshot : ModelSnapshot
+    [Migration("20231219123120_Add_One_To_Many_Realtaion_Between_ServiceOperator_And_ServiceStatus_Tables")]
+    partial class Add_One_To_Many_Realtaion_Between_ServiceOperator_And_ServiceStatus_Tables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -420,10 +423,6 @@ namespace ReportingProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ISOCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -683,7 +682,7 @@ namespace ReportingProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("ApprovalStatusId")
+                    b.Property<int>("ApprovalStatusId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DueDate")
@@ -911,28 +910,6 @@ namespace ReportingProject.Migrations
                     b.ToTable("Reports");
                 });
 
-            modelBuilder.Entity("ReportingProject.Data.Entities.ReportNote", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ReportId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ReportId");
-
-                    b.ToTable("ReportNotes");
-                });
-
             modelBuilder.Entity("ReportingProject.Data.Entities.ReportType", b =>
                 {
                     b.Property<int>("Id")
@@ -948,47 +925,6 @@ namespace ReportingProject.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ReportTypes");
-                });
-
-            modelBuilder.Entity("ReportingProject.Data.Entities.Revenue", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<decimal>("MerchantRevenue")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("Month")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PostSubscriptions")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Refund")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int?>("ServiceId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TotalSubscriptions")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("UniverseRevenue")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("Year")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ServiceId");
-
-                    b.HasIndex("Month", "Year");
-
-                    b.ToTable("Revenues");
                 });
 
             modelBuilder.Entity("ReportingProject.Data.Entities.Service", b =>
@@ -1049,7 +985,7 @@ namespace ReportingProject.Migrations
                     b.Property<int?>("ServiceStatusId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ShortCode")
+                    b.Property<int>("ShortCode")
                         .HasColumnType("int");
 
                     b.HasKey("ServiceId", "OperatorId");
@@ -1121,44 +1057,6 @@ namespace ReportingProject.Migrations
                     b.HasIndex("OperatorId");
 
                     b.ToTable("UniverseInvoices");
-                });
-
-            modelBuilder.Entity("ReportingProject.Data.Entities.UserSession", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("MachineAddress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserAgent")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserHostAddress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserHostName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.ToTable("UserSessions");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -1333,7 +1231,9 @@ namespace ReportingProject.Migrations
                 {
                     b.HasOne("ReportingProject.Data.Entities.ApprovalStatus", "ApprovalStatus")
                         .WithMany("MerchantInvoices")
-                        .HasForeignKey("ApprovalStatusId");
+                        .HasForeignKey("ApprovalStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ReportingProject.Data.Entities.Invoice", null)
                         .WithOne("MerchantInvoice")
@@ -1425,24 +1325,6 @@ namespace ReportingProject.Migrations
                     b.Navigation("ReportType");
                 });
 
-            modelBuilder.Entity("ReportingProject.Data.Entities.ReportNote", b =>
-                {
-                    b.HasOne("ReportingProject.Data.Entities.Report", "Report")
-                        .WithMany("ReportNotes")
-                        .HasForeignKey("ReportId");
-
-                    b.Navigation("Report");
-                });
-
-            modelBuilder.Entity("ReportingProject.Data.Entities.Revenue", b =>
-                {
-                    b.HasOne("ReportingProject.Data.Entities.Service", "Service")
-                        .WithMany("Revenues")
-                        .HasForeignKey("ServiceId");
-
-                    b.Navigation("Service");
-                });
-
             modelBuilder.Entity("ReportingProject.Data.Entities.Service", b =>
                 {
                     b.HasOne("ReportingProject.Data.Entities.Contract", "Contract")
@@ -1498,22 +1380,11 @@ namespace ReportingProject.Migrations
                     b.Navigation("Operator");
                 });
 
-            modelBuilder.Entity("ReportingProject.Data.Entities.UserSession", b =>
-                {
-                    b.HasOne("ReportingProject.Data.Entities.ApplicationUser", "ApplicationUser")
-                        .WithMany("UserSessions")
-                        .HasForeignKey("ApplicationUserId");
-
-                    b.Navigation("ApplicationUser");
-                });
-
             modelBuilder.Entity("ReportingProject.Data.Entities.ApplicationUser", b =>
                 {
                     b.Navigation("ReceivedNotifications");
 
                     b.Navigation("SentNotifications");
-
-                    b.Navigation("UserSessions");
                 });
 
             modelBuilder.Entity("ReportingProject.Data.Entities.ApprovalStatus", b =>
@@ -1615,8 +1486,6 @@ namespace ReportingProject.Migrations
                     b.Navigation("MerchantReport");
 
                     b.Navigation("OperatorReport");
-
-                    b.Navigation("ReportNotes");
                 });
 
             modelBuilder.Entity("ReportingProject.Data.Entities.ReportType", b =>
@@ -1626,8 +1495,6 @@ namespace ReportingProject.Migrations
 
             modelBuilder.Entity("ReportingProject.Data.Entities.Service", b =>
                 {
-                    b.Navigation("Revenues");
-
                     b.Navigation("ServiceOperators");
                 });
 
