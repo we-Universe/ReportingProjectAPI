@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using ReportingProject.Data.Entities;
 
 namespace ReportingProject.Data.Models
 {
@@ -9,9 +10,6 @@ namespace ReportingProject.Data.Models
 
         public DateTime? LastModified { get; set; }
 
-        [Required]
-        public int ApprovalStatusID { get; set; }
-
         public string Notes { get; set; } = string.Empty;
 
         public int Month { get; set; }
@@ -20,5 +18,10 @@ namespace ReportingProject.Data.Models
 
         [Required]
         public byte[]? ReportFile { get; set; }
+
+        //foreign key
+        public int ApprovalStatusId { get; set; }
+
+        public ApprovalStatus ApprovalStatus { get; set; }
     }
 }
