@@ -11,7 +11,7 @@ namespace ReportingProject.Data.Entities
         public int Year { get; set; }
         public DateTime LastModified { get; set; }
         public string Notes { get; set; } = string.Empty;
-        public byte[]? ReportFile { get; set; }
+        public required byte[] ReportFile { get; set; }
         public int ApprovalStatusId { get; set; }
         public ReportType? ReportType { get; set; }
         public ApprovalStatus? ApprovalStatus { get; set; }

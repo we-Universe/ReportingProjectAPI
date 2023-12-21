@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReportingProject.Data.Contextes;
 
@@ -11,9 +12,11 @@ using ReportingProject.Data.Contextes;
 namespace ReportingProject.Migrations
 {
     [DbContext(typeof(ReportingDBContext))]
-    partial class ReportingDBContextModelSnapshot : ModelSnapshot
+    [Migration("20231221141801_Update_The_Report_File_Coulmn_To_Be_Required")]
+    partial class Update_The_Report_File_Coulmn_To_Be_Required
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

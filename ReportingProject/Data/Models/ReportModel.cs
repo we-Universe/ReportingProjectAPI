@@ -2,7 +2,7 @@
 
 namespace ReportingProject.Data.Models
 {
-	public class ReportsModel
+	public class ReportModel
 	{
         [Required]
         public int TypeID { get; set; }
@@ -19,6 +19,6 @@ namespace ReportingProject.Data.Models
         public int Year { get; set; }
 
         [Required]
-        public byte[]? ReportFile { get; set; }
+        public required byte[] ReportFile { get; set; }
     }
 }

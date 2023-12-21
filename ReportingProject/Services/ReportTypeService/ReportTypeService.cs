@@ -1,4 +1,6 @@
-﻿using ReportingProject.Data.Entities;
+﻿using AutoMapper;
+using ReportingProject.Data.Entities;
+using ReportingProject.Data.Resources;
 using ReportingProject.Repositories.ReportTypeRepository;
 
 namespace ReportingProject.Services.ReportTypeService
@@ -6,10 +8,12 @@ namespace ReportingProject.Services.ReportTypeService
     public class ReportTypeService : IReportTypeService
     {
         private readonly IReportTypeRepository _reportTypeRepository;
+        private readonly IMapper _mapper;
 
-        public ReportTypeService(IReportTypeRepository reportTypeRepository)
+        public ReportTypeService(IReportTypeRepository reportTypeRepository, IMapper mapper)
         {
             _reportTypeRepository = reportTypeRepository;
+            _mapper = mapper;
         }
         public Task AddReportTypeAsync(ReportType entity)
         {
@@ -21,9 +25,10 @@ namespace ReportingProject.Services.ReportTypeService
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<ReportType>> GetAllReportsTypesAsync()
+        public async Task<IEnumerable<ReportTypeResource>> GetAllReportsTypesAsync()
         {
-              return await _reportTypeRepository.GetAllReportsTypesAsync();
+            var reportsTypesEntities = await _reportTypeRepository.GetAllReportsTypesAsync();
+            return _mapper.Map<IEnumerable<ReportTypeResource>>(reportsTypesEntities);
         }
 
         public Task<ReportType> GetReportTypeByIdAsync(int id)

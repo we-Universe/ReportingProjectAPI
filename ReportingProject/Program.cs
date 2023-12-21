@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using ReportingProject.Data.Contextes;
 using ReportingProject.Data.Entities;
+using ReportingProject.Data.Mapping;
 using ReportingProject.Repositories.ReportRepository;
 using ReportingProject.Repositories.ReportTypeRepository;
 using ReportingProject.Services.AuthenticationService;
@@ -70,7 +71,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

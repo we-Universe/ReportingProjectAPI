@@ -32,7 +32,7 @@ namespace ReportingProject.Repositories.ReportRepository
 
         public async Task<IEnumerable<Report>> GetAllReportsAsync()
         {
-            return await _dbSet.ToListAsync();
+            return await _dbSet.Include(report=>report.ReportNotes).ToListAsync();
         }
 
         public async Task<Report> GetReportByIdAsync(int id)
