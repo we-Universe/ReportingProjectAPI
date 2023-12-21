@@ -5,7 +5,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using ReportingProject.Data.Contextes;
 using ReportingProject.Data.Entities;
+using ReportingProject.Repositories.ReportRepository;
+using ReportingProject.Repositories.ReportTypeRepository;
 using ReportingProject.Services.AuthenticationService;
+using ReportingProject.Services.ReportService;
+using ReportingProject.Services.ReportTypeService;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -57,6 +61,11 @@ builder.Services.AddCors(options =>
 
 // Add services to the container.
 builder.Services.AddScoped<IUserAuthenticationService, UserAuthenticationService>();
+builder.Services.AddScoped<IReportService,ReportService >();
+builder.Services.AddScoped<IReportTypeService, ReportTypeService>();
+builder.Services.AddScoped<IReportRepository, ReportRepository>();
+builder.Services.AddScoped<IReportTypeRepository, ReportTypeRepository>();
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
