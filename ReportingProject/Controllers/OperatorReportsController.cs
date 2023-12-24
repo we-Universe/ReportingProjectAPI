@@ -28,6 +28,7 @@ namespace ReportingProject.Controllers
             try
             {
                 //int reportId = await _reportsService.UploadReportAsync(operatorReportsModel);
+                //Console.Error.WriteLine(operatorReportsModel);
                 return Ok();
             }
             catch (Exception ex)

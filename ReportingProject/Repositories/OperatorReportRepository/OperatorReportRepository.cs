@@ -31,10 +31,10 @@ namespace ReportingProject.Repositories.OperatorReportRepository
             throw new NotImplementedException();
         }
 
-        //public async Task<IEnumerable<OperatorReport>> GetAllReportsAsync()
-        //{
-        //    return await _dbSet.Include(report => report.ReportNotes).ToListAsync();
-        //}
+        public async Task<IEnumerable<OperatorReport>> GetAllReportsAsync()
+        {
+            return await _dbSet.ToListAsync();
+        }
 
         public async Task<OperatorReport> GetReportByIdAsync(int id)
         {

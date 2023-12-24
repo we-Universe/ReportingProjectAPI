@@ -23,7 +23,5 @@ namespace ReportingProject.Data.Models
         //foreign key
         public int ApprovalStatusId { get; set; }
         public ApprovalStatus? ApprovalStatus { get; set; }
-
-        public required byte[]? ReportFile { get; set; }
     }
 }
