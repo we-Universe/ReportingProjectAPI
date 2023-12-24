@@ -22,7 +22,7 @@ builder.Services.AddDbContext<ReportingDBContext>(options =>
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
-    options.Password.RequiredLength = 4;
+    options.Password.RequiredLength = 6;
 }).AddEntityFrameworkStores<ReportingDBContext>()
     .AddDefaultTokenProviders();
 
