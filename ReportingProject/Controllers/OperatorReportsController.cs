@@ -27,8 +27,12 @@ namespace ReportingProject.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
                 //int reportId = await _reportsService.UploadReportAsync(operatorReportsModel);
-                //Console.Error.WriteLine(operatorReportsModel);
+                Console.WriteLine(operatorReportsModel);
                 return Ok();
             }
             catch (Exception ex)

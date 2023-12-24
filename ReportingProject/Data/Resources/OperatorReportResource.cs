@@ -1,6 +1,4 @@
-﻿using ReportingProject.Data.Entities;
-
-namespace ReportingProject.Data.Resources
+﻿namespace ReportingProject.Data.Resources
 {
 	public class OperatorReportResource
 	{
