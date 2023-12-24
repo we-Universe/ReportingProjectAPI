@@ -9,6 +9,7 @@
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
   <ItemGroup>
+    <PackageReference Include="ClosedXML" Version="0.102.1" />
     <PackageReference Include="MailKit" Version="4.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.14" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
@@ -28,4 +29,12 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Services\OperatorReportService\" />
+    <None Remove="Repositories\OperatorReportRepository\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\OperatorReportService\" />
+    <Folder Include="Repositories\OperatorReportRepository\" />
+  </ItemGroup>
 </Project>

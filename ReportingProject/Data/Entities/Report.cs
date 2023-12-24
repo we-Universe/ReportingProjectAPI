@@ -13,7 +13,6 @@ namespace ReportingProject.Data.Entities
         public string Notes { get; set; } = string.Empty;
         public byte[]? ReportFile { get; set; }
         public int ApprovalStatusId { get; set; }
-
         public ReportType? ReportType { get; set; }
         public ApprovalStatus? ApprovalStatus { get; set; }
         public OperatorReport? OperatorReport { get; set; }
