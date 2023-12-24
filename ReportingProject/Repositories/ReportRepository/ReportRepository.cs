@@ -8,10 +8,12 @@ namespace ReportingProject.Repositories.ReportRepository
     {
         private readonly ReportingDBContext _reportingDBContext;
         private readonly DbSet<Report> _dbSet;
+
         public ReportRepository(ReportingDBContext reportingDBContex) {
             _reportingDBContext = reportingDBContex;
             _dbSet = _reportingDBContext.Set<Report>();
         }
+
         public async Task UploadReportAsync(Report entity)
         {
             try
@@ -32,7 +34,7 @@ namespace ReportingProject.Repositories.ReportRepository
 
         public async Task<IEnumerable<Report>> GetAllReportsAsync()
         {
-            return await _dbSet.ToListAsync();
+            return await _dbSet.Include(report => report.ReportNotes).ToListAsync();
         }
 
         public async Task<Report> GetReportByIdAsync(int id)

@@ -13,6 +13,11 @@ namespace ReportingProject.Data.Contextes
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ApplicationUser>()
+            .HasOne(u => u.Country)
+            .WithMany(c => c.Users)
+            .HasForeignKey(u => u.CountryID);
+
             modelBuilder.Entity<Notification>()
                 .HasOne(n => n.Sender)
                 .WithMany(u => u.SentNotifications)

@@ -11,6 +11,5 @@
         public byte[]? RefundFile { get; set; }
         public Report? Report { get; set; }
         public Operator? Operator { get; set; }
-
     }
 }

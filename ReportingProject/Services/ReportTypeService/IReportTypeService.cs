@@ -1,10 +1,11 @@
 ﻿using ReportingProject.Data.Entities;
+using ReportingProject.Data.Resources;
 
 namespace ReportingProject.Services.ReportTypeService
 {
     public interface IReportTypeService
     {
-        Task<IEnumerable<ReportType>> GetAllReportsTypesAsync();
+        Task<IEnumerable<ReportTypeResource>> GetAllReportsTypesAsync();
         Task<ReportType> GetReportTypeByIdAsync(int id);
         Task AddReportTypeAsync(ReportType entity);
         Task UpdateReportTypeAsync(ReportType entity);

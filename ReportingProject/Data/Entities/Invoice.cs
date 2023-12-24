@@ -12,6 +12,7 @@ namespace ReportingProject.Data.Entities
         public DateTime BillingDate { get; set; }
         public DateTime? PaymentDate { get; set; }
         public DateTime LastModified { get; set; }
+        public required byte[] InvoiceFile { get; set; }
         public byte[]? SwiftFile { get; set; }
         public byte[]? ReceiptFile { get; set; }
         public int InvoiceStatusID { get; set; }

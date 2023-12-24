@@ -21,12 +21,5 @@ namespace ReportingProject.Controllers
             return Ok(reports);   
         }
 
-        //[HttpPost("UploadReport")]
-        //public async Task<IActionResult> UploadReport()
-        //{
-        //    var reports = await _reportService.UploadReportAsync();
-        //    return Ok(reports);
-        //}
-
     }
 }

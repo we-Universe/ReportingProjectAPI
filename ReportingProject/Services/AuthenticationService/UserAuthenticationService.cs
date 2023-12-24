@@ -39,29 +39,42 @@ namespace ReportingProject.Services.AuthenticationService
             return await _userManager.CheckPasswordAsync(applicationUser, loginModel.Password);
         }
 
-        public async Task<bool> RegisterUser(RegisterModel registerModel)
+        public async Task<string> RegisterUser(RegisterModel registerModel)
         {
+            var errorMessage = "";
             var applicationUser = new ApplicationUser
             {
                 UserName = registerModel.Username,
                 Email = registerModel.Email,
-                IsActive = true,
+                PhoneNumber = registerModel.PhoneNumber,
+                CountryID = registerModel.CountryId,
+                IsActive = registerModel.IsActive,
             };
-
-            var result = await _userManager.CreateAsync(applicationUser, registerModel.Password);
-
-            if (result.Succeeded)
+            try
             {
-                //Please change it !!!
-                //var addToRoleResult = await _userManager.AddToRoleAsync(identityUser, "Admin");
+                var applicationUserCreationResult = await _userManager.CreateAsync(applicationUser, registerModel.Password);
 
-                //if (!addToRoleResult.Succeeded)
-                //{
-                //    return false;
-                //}
+                if (!applicationUserCreationResult.Succeeded)
+                {
+                    errorMessage = applicationUserCreationResult.Errors.First().Description;
+                    return errorMessage;
+                }
+                var addToRoleResult = await _userManager.AddToRoleAsync(applicationUser, registerModel.Role);
+
+                if (!addToRoleResult.Succeeded)
+                {
+                    errorMessage = addToRoleResult.Errors.First().Description;
+                    return errorMessage;
+                 }
             }
-            return result.Succeeded;
+            catch (Exception ex)
+            {
+                errorMessage = ex.Message;
+                return errorMessage;
+            }
+            return errorMessage;
         }
+
 
         public AccessDataResource GenerateToken(LoginModel loginModel)
         {

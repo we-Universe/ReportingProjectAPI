@@ -27,8 +27,8 @@ namespace ReportingProject.Controllers
         {
             try
             {
-                int reportId = await _reportsService.UploadReportAsync(operatorReportsModel);
-                return Ok(new { ReportId = reportId });
+                //int reportId = await _reportsService.UploadReportAsync(operatorReportsModel);
+                return Ok();
             }
             catch (Exception ex)
             {

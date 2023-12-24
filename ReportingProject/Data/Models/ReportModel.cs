@@ -3,7 +3,7 @@ using ReportingProject.Data.Entities;
 
 namespace ReportingProject.Data.Models
 {
-	public class ReportsModel
+	public class ReportModel
 	{
         //foreign key
         public int ReportTypeId { get; set; }
@@ -23,5 +23,7 @@ namespace ReportingProject.Data.Models
         //foreign key
         public int ApprovalStatusId { get; set; }
         public ApprovalStatus? ApprovalStatus { get; set; }
+
+        public required byte[]? ReportFile { get; set; }
     }
 }

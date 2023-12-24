@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using ReportingProject.Data.Contextes;
 using ReportingProject.Data.Entities;
 using ReportingProject.Repositories.OperatorReportRepository;
+using ReportingProject.Data.Mapping;
 using ReportingProject.Repositories.ReportRepository;
 using ReportingProject.Repositories.ReportTypeRepository;
 using ReportingProject.Services.AuthenticationService;
@@ -23,7 +24,7 @@ builder.Services.AddDbContext<ReportingDBContext>(options =>
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
-    options.Password.RequiredLength = 4;
+    options.Password.RequiredLength = 6;
 }).AddEntityFrameworkStores<ReportingDBContext>()
     .AddDefaultTokenProviders();
 
@@ -74,7 +75,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -4,13 +4,13 @@ using ReportingProject.Data.Entities;
 
 namespace ReportingProject.Repositories.OperatorReportRepository
 {
-	public class OperatorReportRepository : IOperatorReportRepository
+    public class OperatorReportRepository : IOperatorReportRepository
     {
         private readonly ReportingDBContext _reportingDBContext;
         private readonly DbSet<OperatorReport> _dbSet;
-        public OperatorReportRepository(ReportingDBContext reportingDBContext)
+        public OperatorReportRepository(ReportingDBContext reportingDBContex)
         {
-            _reportingDBContext = reportingDBContext;
+            _reportingDBContext = reportingDBContex;
             _dbSet = _reportingDBContext.Set<OperatorReport>();
         }
         public async Task UploadReportAsync(OperatorReport entity)
@@ -31,10 +31,10 @@ namespace ReportingProject.Repositories.OperatorReportRepository
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<OperatorReport>> GetAllReportsAsync()
-        {
-            return await _dbSet.ToListAsync();
-        }
+        //public async Task<IEnumerable<OperatorReport>> GetAllReportsAsync()
+        //{
+        //    return await _dbSet.Include(report => report.ReportNotes).ToListAsync();
+        //}
 
         public async Task<OperatorReport> GetReportByIdAsync(int id)
         {

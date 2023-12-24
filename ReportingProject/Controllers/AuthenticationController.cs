@@ -18,11 +18,14 @@ namespace ReportingProject.Controllers
         [HttpPost("Register")]
         public async Task<IActionResult> RegisterUser(RegisterModel registerModel)
         {
-            if (await _userAuthenticationService.RegisterUser(registerModel))
+            var errors = await _userAuthenticationService.RegisterUser(registerModel);
+            
+            if (errors != "")
             {
-                return Ok("User registered successfuly");
+                return BadRequest(errors);    
             }
-            return BadRequest("Something went worng");
+            return Ok("User registered successfuly");
+
         }
 
         [HttpPost("Login")]

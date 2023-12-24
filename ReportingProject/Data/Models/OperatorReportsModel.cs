@@ -2,7 +2,7 @@
 
 namespace ReportingProject.Data.Models
 {
-	public class OperatorReportsModel : ReportsModel
+	public class OperatorReportsModel : ReportModel
     {
         //foreign key
         public int ReportId { get; set; }
