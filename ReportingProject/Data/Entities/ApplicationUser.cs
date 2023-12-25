@@ -8,6 +8,7 @@ namespace ReportingProject.Data.Entities
         
         public DateTime LastLoginDate { get; set; }
         public bool IsActive { get; set; }
+        public int? CountryID { get; set; }
         public Country? Country { get; set; }
         public List<Notification>? SentNotifications { get; set; }
         public List<Notification>? ReceivedNotifications { get; set; }

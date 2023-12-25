@@ -31,4 +31,12 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Services\OperatorReportService\" />
+    <None Remove="Repositories\OperatorReportRepository\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\OperatorReportService\" />
+    <Folder Include="Repositories\OperatorReportRepository\" />
+  </ItemGroup>
 </Project>

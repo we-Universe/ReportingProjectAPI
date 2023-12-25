@@ -1,6 +1,6 @@
-﻿namespace ReportingProject.Data.Entities
+﻿namespace ReportingProject.Data.Resources
 {
-    public class OperatorReport
+    public class OperatorReportsResource
     {
         public int Id { get; set; }
         public int? ReportId { get; set; }
@@ -9,7 +9,5 @@
         public byte[]? MWFile { get; set; }
         public byte[]? IMIFile { get; set; }
         public byte[]? RefundFile { get; set; }
-        public Report? Report { get; set; }
-        public Operator? Operator { get; set; }
     }
 }

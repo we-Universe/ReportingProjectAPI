@@ -2,19 +2,20 @@
 using ReportingProject.Data.Contextes;
 using ReportingProject.Data.Entities;
 
-namespace ReportingProject.Repositories.ReportRepository
+namespace ReportingProject.Repositories.OperatorReportRepository
 {
-    public class ReportRepository : IReportRepository
+    public class OperatorReportRepository : IOperatorReportRepository
     {
         private readonly ReportingDBContext _reportingDBContext;
-        private readonly DbSet<Report> _dbSet;
+        private readonly DbSet<OperatorReport> _dbSet;
 
-        public ReportRepository(ReportingDBContext reportingDBContex) {
+        public OperatorReportRepository(ReportingDBContext reportingDBContex)
+        {
             _reportingDBContext = reportingDBContex;
-            _dbSet = _reportingDBContext.Set<Report>();
+            _dbSet = _reportingDBContext.Set<OperatorReport>();
         }
 
-        public async Task UploadReportAsync(Report entity)
+        public async Task UploadReportAsync(OperatorReport entity)
         {
             try
             {
@@ -32,17 +33,17 @@ namespace ReportingProject.Repositories.ReportRepository
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<Report>> GetAllReportsAsync()
+        public async Task<IEnumerable<OperatorReport>> GetAllReportsAsync()
         {
-            return await _dbSet.Include(report=>report.ReportNotes).ToListAsync();
+            return await _dbSet.ToListAsync();
         }
 
-        public async Task<Report> GetReportByIdAsync(int id)
+        public async Task<OperatorReport> GetReportByIdAsync(int id)
         {
-            return await _dbSet.FindAsync(id) ?? throw new Exception("Report not found");
+            return await _dbSet.FindAsync(id) ?? throw new Exception("Operator Report not found");
         }
 
-        public Task UpdateReportAsync(Report entity)
+        public Task UpdateReportAsync(OperatorReport entity)
         {
             throw new NotImplementedException();
         }

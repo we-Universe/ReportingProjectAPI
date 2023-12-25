@@ -1,4 +1,5 @@
-﻿using ReportingProject.Data.Models;
+﻿using Microsoft.AspNetCore.Identity;
+using ReportingProject.Data.Models;
 using ReportingProject.Data.Resources;
 
 namespace ReportingProject.Services.AuthenticationService
@@ -7,7 +8,8 @@ namespace ReportingProject.Services.AuthenticationService
     {
         AccessDataResource GenerateToken(LoginModel loginModel);
         Task<bool> Login(LoginModel loginModel);
-        Task<bool> RegisterUser(RegisterModel registerModel);
+        Task<string> RegisterUser(RegisterModel registerModel);
         Task<bool> ForgetPassword(ForgetPasswordModel forgetPasswordModel);
+        List<IdentityRole> GetAllRoles();
     }
 }

@@ -5,10 +5,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using ReportingProject.Data.Contextes;
 using ReportingProject.Data.Entities;
+using ReportingProject.Repositories.OperatorReportRepository;
 using ReportingProject.Data.Mapping;
+using ReportingProject.Repositories.CountryRepository;
 using ReportingProject.Repositories.ReportRepository;
 using ReportingProject.Repositories.ReportTypeRepository;
 using ReportingProject.Services.AuthenticationService;
+using ReportingProject.Services.CountryService;
+using ReportingProject.Services.OperatorReportService;
 using ReportingProject.Services.ReportService;
 using ReportingProject.Services.ReportTypeService;
 using System.Text;
@@ -22,7 +26,7 @@ builder.Services.AddDbContext<ReportingDBContext>(options =>
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
-    options.Password.RequiredLength = 4;
+    options.Password.RequiredLength = 6;
 }).AddEntityFrameworkStores<ReportingDBContext>()
     .AddDefaultTokenProviders();
 
@@ -63,9 +67,13 @@ builder.Services.AddCors(options =>
 // Add services to the container.
 builder.Services.AddScoped<IUserAuthenticationService, UserAuthenticationService>();
 builder.Services.AddScoped<IReportService,ReportService >();
+builder.Services.AddScoped<IOperatorReportService, OperatorReportService>();
+builder.Services.AddScoped<ICountryService, CountryService>();
+builder.Services.AddScoped<ICountryRepository, CountryRepository>();
 builder.Services.AddScoped<IReportTypeService, ReportTypeService>();
 builder.Services.AddScoped<IReportRepository, ReportRepository>();
 builder.Services.AddScoped<IReportTypeRepository, ReportTypeRepository>();
+builder.Services.AddScoped<IOperatorReportRepository, OperatorReportRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
