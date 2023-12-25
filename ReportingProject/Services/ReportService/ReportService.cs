@@ -26,7 +26,6 @@ namespace ReportingProject.Services.ReportService
             try
             {
                 var reportEntity = _mapper.Map<Report>(model);
-                await _reportRepository.UploadReportAsync(reportEntity);
 
                 var operatorReport = new OperatorReportsModel
                 {
@@ -39,11 +38,13 @@ namespace ReportingProject.Services.ReportService
                 };
 
                 var operatorReportEntity = _mapper.Map<OperatorReport>(operatorReport);
+
+                await _reportRepository.UploadReportAsync(reportEntity);
                 await _reportOperatorRepository.UploadReportAsync(operatorReportEntity);
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine(operatorReport);
+                Console.Error.WriteLine(ex.Message);
                 throw; 
             }
         }

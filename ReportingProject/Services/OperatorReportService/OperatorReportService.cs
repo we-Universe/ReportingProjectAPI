@@ -3,9 +3,6 @@ using ReportingProject.Data.Entities;
 using ReportingProject.Data.Models;
 using ReportingProject.Data.Resources;
 using ReportingProject.Repositories.OperatorReportRepository;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace ReportingProject.Services.OperatorReportService
 {
