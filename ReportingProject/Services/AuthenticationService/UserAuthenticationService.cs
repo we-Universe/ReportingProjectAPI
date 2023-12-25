@@ -48,11 +48,13 @@ namespace ReportingProject.Services.AuthenticationService
                 Email = registerModel.Email,
                 PhoneNumber = registerModel.PhoneNumber,
                 CountryID = registerModel.CountryId,
-                IsActive = registerModel.IsActive,
+                IsActive = true,
             };
+            var pwd = new Password(8).IncludeLowercase().IncludeUppercase().IncludeSpecial().IncludeNumeric();
+            var generatedPassword = pwd.Next();
             try
             {
-                var applicationUserCreationResult = await _userManager.CreateAsync(applicationUser, registerModel.Password);
+                var applicationUserCreationResult = await _userManager.CreateAsync(applicationUser, generatedPassword);
 
                 if (!applicationUserCreationResult.Succeeded)
                 {
@@ -66,6 +68,18 @@ namespace ReportingProject.Services.AuthenticationService
                     errorMessage = addToRoleResult.Errors.First().Description;
                     return errorMessage;
                  }
+                var email = new MimeMessage();
+                email.From.Add(MailboxAddress.Parse("example@we-universe.com"));
+                email.To.Add(MailboxAddress.Parse(registerModel.Email));
+                email.Subject = "Registration Password";
+                email.Body = new TextPart(TextFormat.Html) { Text = "Your registration password is: " + generatedPassword };
+
+                using var smtp = new SmtpClient();
+                smtp.Connect("smtp.office365.com", 587, SecureSocketOptions.StartTls);
+                smtp.Authenticate("example@we-universe.com", "password");
+                smtp.Send(email);
+                smtp.Disconnect(true);
+                smtp.Dispose();
             }
             catch (Exception ex)
             {
