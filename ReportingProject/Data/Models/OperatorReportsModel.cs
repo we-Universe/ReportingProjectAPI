@@ -1,8 +1,6 @@
-﻿using ReportingProject.Data.Entities;
-
-namespace ReportingProject.Data.Models
+﻿namespace ReportingProject.Data.Models
 {
-	public class OperatorReportsModel
+	public class OperatorReportsModel 
     {
         public int ReportId { get; set; }
 
