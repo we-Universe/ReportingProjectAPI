@@ -2,7 +2,7 @@
 
 namespace ReportingProject.Data.Models
 {
-	public class OperatorReportsModel : ReportModel
+	public class OperatorReportsModel
     {
         public int ReportId { get; set; }
 

@@ -1,4 +1,6 @@
-﻿using ReportingProject.Data.Entities;
+﻿using AutoMapper;
+using ReportingProject.Data.Entities;
+using ReportingProject.Data.Resources;
 using ReportingProject.Repositories.OperatorReportRepository;
 
 namespace ReportingProject.Services.OperatorReportService
@@ -6,11 +8,14 @@ namespace ReportingProject.Services.OperatorReportService
 	public class OperatorReportService : IOperatorReportService
     {
         private readonly IOperatorReportRepository _reportRepository;
+        private readonly IMapper _mapper;
 
-        public OperatorReportService(IOperatorReportRepository reportRepository)
+        public OperatorReportService(IOperatorReportRepository reportRepository, IMapper mapper)
         {
             _reportRepository = reportRepository;
+            _mapper = mapper;
         }
+
         public Task UploadReportAsync(OperatorReport entity)
         {
             throw new NotImplementedException();
@@ -21,9 +26,10 @@ namespace ReportingProject.Services.OperatorReportService
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<OperatorReport>> GetAllReportsAsync()
+        public async Task<IEnumerable<OperatorReportsResource>> GetAllReportsAsync()
         {
-            return await _reportRepository.GetAllReportsAsync();
+            var reportsEntities = await _reportRepository.GetAllReportsAsync();
+            return _mapper.Map<IEnumerable<OperatorReportsResource>>(reportsEntities);
         }
 
         public Task<OperatorReport> GetReportByIdAsync(int id)

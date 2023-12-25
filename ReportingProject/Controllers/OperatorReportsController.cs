@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ReportingProject.Data.Entities;
 using ReportingProject.Data.Models;
 using ReportingProject.Services.OperatorReportService;
 
@@ -31,8 +32,13 @@ namespace ReportingProject.Controllers
                 {
                     return BadRequest(ModelState);
                 }
-                //int reportId = await _reportsService.UploadReportAsync(operatorReportsModel);
-                Console.WriteLine(operatorReportsModel);
+
+                // Use AutoMapper to map OperatorReportsModel to OperatorReport
+                //var operatorReport = _mapper.Map<OperatorReport>(operatorReportsModel);
+
+                // Call the service method to add the record
+                //await _reportService.UploadReportAsync(operatorReport);
+
                 return Ok();
             }
             catch (Exception ex)
