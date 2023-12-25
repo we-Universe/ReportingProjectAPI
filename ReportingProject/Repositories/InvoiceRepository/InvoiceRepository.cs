@@ -23,24 +23,25 @@ namespace ReportingProject.Repositories.InvoiceRepository
                 // Save changes to generate the InvoiceId (assuming InvoiceId is an identity column)
                 await _reportingDBContext.SaveChangesAsync();
 
-                if (invoice.InvoiceNotes != null && invoice.InvoiceNotes.Any())
-                {
-                    foreach (var note in invoice.InvoiceNotes)
-                    {
-                        note.InvoiceId = invoice.ID;
-                        _reportingDBContext.InvoiceNotes.Add(note);
-                    }
+                //if (invoice.InvoiceNotes != null && invoice.InvoiceNotes.Any())
+                //{
+                //    foreach (var note in invoice.InvoiceNotes)
+                //    {
+                //        //note.InvoiceId = invoice.ID;
+                //        _reportingDBContext.InvoiceNotes.Add(note);
+                //    }
 
-                    await _reportingDBContext.SaveChangesAsync();
-                }
+                //    await _reportingDBContext.SaveChangesAsync();
+                //}
 
-                return true;
+                
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"An error occurred: {ex}");
                 return false;
             }
+            return true;
         }
     }
 }

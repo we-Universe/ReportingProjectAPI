@@ -23,7 +23,8 @@ namespace ReportingProject.Services.InvoiceService
         public async Task<bool> AddInvoiceReportAsync(InvoiceModel invoiceModel)
 
         {
-            var invoiceEntity = _mapper.Map<Invoice>(invoiceModel); 
+            var invoiceEntity = _mapper.Map<Invoice>(invoiceModel);
+            invoiceEntity.InvoiceNotes = _mapper.Map<List<InvoiceNote>>(invoiceModel.InvoiceNotes);
             invoiceEntity.LastModified = DateTime.Now;
             return  await _invoiceRepository.AddInvoiceReportAsync(invoiceEntity);   
         }

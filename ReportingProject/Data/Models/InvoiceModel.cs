@@ -1,5 +1,4 @@
-﻿using ReportingProject.Data.Entities;
-
+﻿
 namespace ReportingProject.Data.Models
 {
     public class InvoiceModel
@@ -14,7 +13,7 @@ namespace ReportingProject.Data.Models
         public required byte[] InvoiceFile { get; set; } 
         public byte[]? SwiftFile { get; set; }
         public byte[]? ReceiptFile { get; set; }
-        public List<InvoiceNote>? InvoiceNotes { get; set; }
+        public List<InvoiceNoteModel> InvoiceNotes { get; set; } = new List<InvoiceNoteModel>();
 
     }
 }

@@ -13,6 +13,7 @@ namespace ReportingProject.Data.Mapping
             CreateMap<ReportNote, ReportNoteResource>().ReverseMap();
             CreateMap<ReportType, ReportTypeResource>().ReverseMap();
             CreateMap<Invoice, InvoiceModel>().ReverseMap();
+            CreateMap<InvoiceNote, InvoiceNoteModel>().ReverseMap();
             CreateMap<OperatorReport, OperatorReportsModel>().ReverseMap();
             CreateMap<OperatorReport, OperatorReportsResource>().ReverseMap();
             CreateMap<Country, CountryResource>().ReverseMap();
