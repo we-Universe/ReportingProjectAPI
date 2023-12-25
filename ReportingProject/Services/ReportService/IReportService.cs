@@ -3,7 +3,7 @@ using ReportingProject.Data.Resources;
 
 namespace ReportingProject.Services.ReportService
 {
-    public interface IReportService
+    public interface IReportService 
     {
         Task<IEnumerable<ReportResource>> GetAllReportsAsync();
         Task<Report> GetReportByIdAsync(int id);
