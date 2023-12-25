@@ -28,11 +28,6 @@ namespace ReportingProject.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
-
                 await _reportService.UploadReportAsync(operatorReportsModel);
 
                 return Ok();
