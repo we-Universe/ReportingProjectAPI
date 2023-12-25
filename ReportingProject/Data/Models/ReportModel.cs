@@ -12,7 +12,6 @@ namespace ReportingProject.Data.Models
         [Required]
         public int ApprovalStatusID { get; set; }
 
-        public string Notes { get; set; } = string.Empty;
 
         public int Month { get; set; }
 
