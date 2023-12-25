@@ -31,7 +31,7 @@ namespace ReportingProject.Services.OperatorReportService
             return await _reportRepository.GetReportByIdAsync(id);
         }
 
-        public async Task UploadReportAsync(OperatorReportsModel model)
+        public async Task UploadOperatorReportAsync(OperatorReportsModel model)
         {
             var operatorReportEntity = _mapper.Map<OperatorReport>(model);
             await _reportRepository.UploadReportAsync(operatorReportEntity);

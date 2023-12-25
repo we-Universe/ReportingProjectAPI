@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ReportingProject.Data.Entities;
 using ReportingProject.Data.Models;
 using ReportingProject.Services.OperatorReportService;
+using ReportingProject.Services.ReportService;
 
 namespace ReportingProject.Controllers
 {
@@ -9,34 +9,35 @@ namespace ReportingProject.Controllers
     [ApiController]
     public class OperatorReportsController : ControllerBase
     {
-        private readonly IOperatorReportService _reportService;
+        private readonly IOperatorReportService _OperatorReportService;
+        //private readonly IReportService _reportService;
 
-        public OperatorReportsController(IOperatorReportService reportService)
+        public OperatorReportsController(IOperatorReportService operatorReportService)
         {
-            _reportService = reportService;
+            _OperatorReportService = operatorReportService;
         }
-
+        
         [HttpGet("GetAllOperatorReports")]
         public async Task<IActionResult> GetAllOperatorReports()
         {
-            var reports = await _reportService.GetAllReportsAsync();
+            var reports = await _OperatorReportService.GetAllReportsAsync();
             return Ok(reports);
         }
 
-        [HttpPost("AddOperatorReport")]
-        public async Task<IActionResult> CreateOperatorReport([FromBody] OperatorReportsModel operatorReportsModel)
-        {
-            try
-            {
-                await _reportService.UploadReportAsync(operatorReportsModel);
+        //[HttpPost("AddOperatorReport")]
+        //public async Task<IActionResult> CreateOperatorReport([FromBody] ReportModel operatorReportsModel)
+        //{
+        //    try
+        //    {
+        //        await _OperatorReportService.UploadOperatorReportAsync(operatorReportsModel);
 
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                Console.Error.WriteLine(ex.Message);
-                return StatusCode(500, "Internal Server Error");
-            }
-        }
+        //        return Ok();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.Error.WriteLine(ex.Message);
+        //        return StatusCode(500, "Internal Server Error");
+        //    }
+        //}
     }
 }
