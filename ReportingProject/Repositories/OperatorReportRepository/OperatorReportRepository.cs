@@ -8,6 +8,7 @@ namespace ReportingProject.Repositories.OperatorReportRepository
     {
         private readonly ReportingDBContext _reportingDBContext;
         private readonly DbSet<OperatorReport> _dbSet;
+
         public OperatorReportRepository(ReportingDBContext reportingDBContex)
         {
             _reportingDBContext = reportingDBContex;

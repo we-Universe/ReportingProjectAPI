@@ -1,7 +1,7 @@
 ﻿namespace ReportingProject.Data.Resources
 {
-	public class OperatorReportResource
-	{
+    public class OperatorReportsResource
+    {
         public int Id { get; set; }
         public int? ReportId { get; set; }
         public int? OperatorId { get; set; }

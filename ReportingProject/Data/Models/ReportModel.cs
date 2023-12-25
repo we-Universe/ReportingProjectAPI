@@ -7,7 +7,6 @@ namespace ReportingProject.Data.Models
 	{
         //foreign key
         public int ReportTypeId { get; set; }
-        public ReportType? ReportType { get; set; }
 
         public DateTime? LastModified { get; set; }
 
@@ -22,6 +21,5 @@ namespace ReportingProject.Data.Models
 
         //foreign key
         public int ApprovalStatusId { get; set; }
-        public ApprovalStatus? ApprovalStatus { get; set; }
     }
 }
