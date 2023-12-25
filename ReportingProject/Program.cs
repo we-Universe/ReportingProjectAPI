@@ -6,9 +6,11 @@ using Microsoft.IdentityModel.Tokens;
 using ReportingProject.Data.Contextes;
 using ReportingProject.Data.Entities;
 using ReportingProject.Data.Mapping;
+using ReportingProject.Repositories.CountryRepository;
 using ReportingProject.Repositories.ReportRepository;
 using ReportingProject.Repositories.ReportTypeRepository;
 using ReportingProject.Services.AuthenticationService;
+using ReportingProject.Services.CountryService;
 using ReportingProject.Services.ReportService;
 using ReportingProject.Services.ReportTypeService;
 using System.Text;
@@ -63,6 +65,8 @@ builder.Services.AddCors(options =>
 // Add services to the container.
 builder.Services.AddScoped<IUserAuthenticationService, UserAuthenticationService>();
 builder.Services.AddScoped<IReportService,ReportService >();
+builder.Services.AddScoped<ICountryService, CountryService>();
+builder.Services.AddScoped<ICountryRepository, CountryRepository>();
 builder.Services.AddScoped<IReportTypeService, ReportTypeService>();
 builder.Services.AddScoped<IReportRepository, ReportRepository>();
 builder.Services.AddScoped<IReportTypeRepository, ReportTypeRepository>();
