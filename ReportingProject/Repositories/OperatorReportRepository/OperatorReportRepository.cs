@@ -14,6 +14,7 @@ namespace ReportingProject.Repositories.OperatorReportRepository
             _reportingDBContext = reportingDBContex;
             _dbSet = _reportingDBContext.Set<OperatorReport>();
         }
+
         public async Task UploadReportAsync(OperatorReport entity)
         {
             try

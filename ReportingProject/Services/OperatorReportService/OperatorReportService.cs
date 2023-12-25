@@ -1,11 +1,15 @@
 ﻿using AutoMapper;
 using ReportingProject.Data.Entities;
+using ReportingProject.Data.Models;
 using ReportingProject.Data.Resources;
 using ReportingProject.Repositories.OperatorReportRepository;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ReportingProject.Services.OperatorReportService
 {
-	public class OperatorReportService : IOperatorReportService
+    public class OperatorReportService : IOperatorReportService
     {
         private readonly IOperatorReportRepository _reportRepository;
         private readonly IMapper _mapper;
@@ -16,30 +20,31 @@ namespace ReportingProject.Services.OperatorReportService
             _mapper = mapper;
         }
 
-        public Task UploadReportAsync(OperatorReport entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task DeleteReportAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<IEnumerable<OperatorReportsResource>> GetAllReportsAsync()
         {
             var reportsEntities = await _reportRepository.GetAllReportsAsync();
             return _mapper.Map<IEnumerable<OperatorReportsResource>>(reportsEntities);
         }
 
-        public Task<OperatorReport> GetReportByIdAsync(int id)
+        public async Task<OperatorReport> GetReportByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _reportRepository.GetReportByIdAsync(id);
         }
 
-        public Task UpdateReportAsync(OperatorReport entity)
+        public async Task UploadReportAsync(OperatorReportsModel model)
         {
-            throw new NotImplementedException();
+            var operatorReportEntity = _mapper.Map<OperatorReport>(model);
+            await _reportRepository.UploadReportAsync(operatorReportEntity);
+        }
+
+        public async Task UpdateReportAsync(OperatorReport entity)
+        {
+            await _reportRepository.UpdateReportAsync(entity);
+        }
+
+        public async Task DeleteReportAsync(int id)
+        {
+            await _reportRepository.DeleteReportAsync(id);
         }
     }
 }

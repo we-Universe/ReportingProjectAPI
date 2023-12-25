@@ -33,11 +33,7 @@ namespace ReportingProject.Controllers
                     return BadRequest(ModelState);
                 }
 
-                // Use AutoMapper to map OperatorReportsModel to OperatorReport
-                //var operatorReport = _mapper.Map<OperatorReport>(operatorReportsModel);
-
-                // Call the service method to add the record
-                //await _reportService.UploadReportAsync(operatorReport);
+                await _reportService.UploadReportAsync(operatorReportsModel);
 
                 return Ok();
             }
