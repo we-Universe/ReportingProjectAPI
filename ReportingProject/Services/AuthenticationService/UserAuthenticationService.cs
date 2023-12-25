@@ -155,5 +155,11 @@ namespace ReportingProject.Services.AuthenticationService
 
             return true;
         }
+
+        public List<IdentityRole> GetAllRoles()
+        {
+            var roles = _roleManager.Roles.ToList();
+            return roles;
+        }
     }
 }

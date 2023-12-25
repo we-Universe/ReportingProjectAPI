@@ -50,6 +50,18 @@ namespace ReportingProject.Controllers
                 return BadRequest("An error occurred, please try later");
         }
 
+        [HttpGet("GetAllRoles")]
+        public IActionResult GetAllRoles()
+        {
+            var roles = _userAuthenticationService.GetAllRoles();
+            if (roles.Count > 0)
+            {
+                return Ok(roles);
+
+            }
+            return NotFound("No roles found!");
+        }
+
 
     }
 }

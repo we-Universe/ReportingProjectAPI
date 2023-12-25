@@ -10,5 +10,6 @@ namespace ReportingProject.Services.AuthenticationService
         Task<bool> Login(LoginModel loginModel);
         Task<string> RegisterUser(RegisterModel registerModel);
         Task<bool> ForgetPassword(ForgetPasswordModel forgetPasswordModel);
+        List<IdentityRole> GetAllRoles();
     }
 }
