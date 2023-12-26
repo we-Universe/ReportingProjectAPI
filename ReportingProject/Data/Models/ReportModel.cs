@@ -17,5 +17,15 @@ namespace ReportingProject.Data.Models
 
         [Required]
         public required byte[] ReportFile { get; set; }
+
+        public int OperatorId { get; set; }
+
+        public byte[]? IMIFile { get; set; }
+
+        public byte[]? DifferencesFile { get; set; }
+
+        public byte[]? MWFile { get; set; }
+
+        public byte[]? RefundFile { get; set; }
     }
 }

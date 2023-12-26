@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
+using DocumentFormat.OpenXml.Bibliography;
 using ReportingProject.Data.Entities;
+using ReportingProject.Data.Models;
 using ReportingProject.Data.Resources;
+using ReportingProject.Repositories.OperatorReportRepository;
 using ReportingProject.Repositories.ReportRepository;
 
 namespace ReportingProject.Services.ReportService
@@ -8,16 +11,42 @@ namespace ReportingProject.Services.ReportService
     public class ReportService : IReportService
     {
         private readonly IReportRepository _reportRepository;
+        private readonly IOperatorReportRepository _reportOperatorRepository;
         private readonly IMapper _mapper;
 
-        public ReportService(IReportRepository reportRepository, IMapper mapper)
+        public ReportService(IReportRepository reportRepository, IMapper mapper, IOperatorReportRepository reportOperatorRepository)
         {
             _reportRepository = reportRepository;
             _mapper = mapper;
+            _reportOperatorRepository = reportOperatorRepository;
         }
-        public Task UploadReportAsync(Report entity)
+
+        public async Task UploadReportAsync(ReportModel model)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var reportEntity = _mapper.Map<Report>(model);
+
+                var operatorReport = new OperatorReportsModel
+                {
+                    ReportId = reportEntity.Id,
+                    OperatorId = model.OperatorId,
+                    IMIFile = model.IMIFile,
+                    DifferencesFile = model.DifferencesFile,
+                    MWFile = model.MWFile,
+                    RefundFile = model.RefundFile
+                };
+
+                var operatorReportEntity = _mapper.Map<OperatorReport>(operatorReport);
+
+                await _reportRepository.UploadReportAsync(reportEntity);
+                await _reportOperatorRepository.UploadReportAsync(operatorReportEntity);
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex.Message);
+                throw; 
+            }
         }
 
         public Task DeleteReportAsync(int id)

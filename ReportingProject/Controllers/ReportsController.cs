@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ReportingProject.Data.Models;
 using ReportingProject.Services.ReportService;
 
 namespace ReportingProject.Controllers
@@ -21,6 +22,20 @@ namespace ReportingProject.Controllers
             return Ok(reports);   
         }
 
+        [HttpPost("AddReport")]
+        public async Task<IActionResult> CreateReport([FromBody] ReportModel reportModel)
+        {
+            try
+            {
+                await _reportService.UploadReportAsync(reportModel);
 
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex.Message);
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
     }
 }

@@ -10,6 +10,7 @@ namespace ReportingProject.Data.Mapping
         public MappingProfile()
         {
             CreateMap<Report, ReportResource>().ReverseMap();
+            CreateMap<Report, ReportModel>().ReverseMap();
             CreateMap<ReportNote, ReportNoteResource>().ReverseMap();
             CreateMap<ReportType, ReportTypeResource>().ReverseMap();
             CreateMap<Invoice, InvoiceModel>().ReverseMap();

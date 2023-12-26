@@ -10,7 +10,7 @@ namespace ReportingProject.Services.OperatorReportService
     {
         Task<IEnumerable<OperatorReportsResource>> GetAllReportsAsync();
         Task<OperatorReport> GetReportByIdAsync(int id);
-        Task UploadReportAsync(OperatorReportsModel model);
+        Task UploadOperatorReportAsync(OperatorReportsModel model);
         Task UpdateReportAsync(OperatorReport entity);
         Task DeleteReportAsync(int id);
     }
