@@ -37,5 +37,26 @@ namespace ReportingProject.Controllers
                 return StatusCode(500, "Internal Server Error");
             }
         }
+
+        [HttpGet("GetReportByReportId")]
+        public async Task<IActionResult> GetReportByReportId(int reportId)
+        {
+            var reports = await _reportService.GetReportByReportIdAsync(reportId);
+            return Ok(reports);
+        }
+
+        [HttpGet("GetReportByOperatorReport")]
+        public async Task<IActionResult> GetReportByOperatorReport()
+        {
+            var reports = await _reportService.GetReportByOperatorReportIdAsync();
+            return Ok(reports);
+        }
+
+        [HttpGet("GetReportsByOperatorReport")]
+        public async Task<IActionResult> GetReportsByOperatorReport()
+        {
+            var reports = await _reportService.GetReportsByOperatorReportAsync();
+            return Ok(reports);
+        }
     }
 }

@@ -18,6 +18,8 @@ using ReportingProject.Services.ReportTypeService;
 using System.Text;
 using ReportingProject.Services.InvoiceService;
 using ReportingProject.Repositories.InvoiceRepository;
+using ReportingProject.Repositories.ApprovalStatusesRepository;
+using ReportingProject.Services.ApprovalStatusesService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -79,6 +81,8 @@ builder.Services.AddScoped<IReportTypeRepository, ReportTypeRepository>();
 builder.Services.AddScoped<IOperatorReportRepository, OperatorReportRepository>();
 builder.Services.AddScoped<IInvoiceService, InvoiceService>();
 builder.Services.AddScoped<IInvoiceRepository, InvoiceRepository>();
+builder.Services.AddScoped<IApprovalStatusesService, ApprovalStatusesService>();
+builder.Services.AddScoped<IApprovalStatusesRepository, ApprovalStatusesRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

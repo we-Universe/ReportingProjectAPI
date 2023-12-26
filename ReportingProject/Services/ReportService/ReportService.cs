@@ -26,10 +26,11 @@ namespace ReportingProject.Services.ReportService
             try
             {
                 var reportEntity = _mapper.Map<Report>(model);
+                await _reportRepository.UploadReportAsync(reportEntity);
 
                 var operatorReport = new OperatorReportsModel
                 {
-                    ReportId = reportEntity.Id,
+                    ReportId = reportEntity.Id, 
                     OperatorId = model.OperatorId,
                     IMIFile = model.IMIFile,
                     DifferencesFile = model.DifferencesFile,
@@ -38,14 +39,12 @@ namespace ReportingProject.Services.ReportService
                 };
 
                 var operatorReportEntity = _mapper.Map<OperatorReport>(operatorReport);
-
-                await _reportRepository.UploadReportAsync(reportEntity);
                 await _reportOperatorRepository.UploadReportAsync(operatorReportEntity);
             }
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex.Message);
-                throw; 
+                throw;
             }
         }
 
@@ -68,6 +67,24 @@ namespace ReportingProject.Services.ReportService
         public Task UpdateReportAsync(Report entity)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<ReportResource>> GetReportByReportIdAsync(int reportId)
+        {
+            var reportsEntities = await _reportRepository.GetReportByReportIdAsync(reportId);
+            return _mapper.Map<IEnumerable<ReportResource>>(reportsEntities);
+        }
+
+        public async Task<IEnumerable<ReportAndOperatorResource>> GetReportByOperatorReportIdAsync()
+        {
+            var reportsEntities = await _reportRepository.GetReportsByOperatorIdAsync();
+            return _mapper.Map<IEnumerable<ReportAndOperatorResource>>(reportsEntities);
+        }
+
+        public async Task<IEnumerable<ReportAndOperatorAnotherFormatResource>> GetReportsByOperatorReportAsync()
+        {
+            var reportsEntities = await _reportRepository.GetReportsByOperatorReportAsync();
+            return _mapper.Map<IEnumerable<ReportAndOperatorAnotherFormatResource>>(reportsEntities);
         }
     }
 }
