@@ -18,6 +18,10 @@ namespace ReportingProject.Controllers
         [HttpPost("AddInvoiceReport")]
         public async Task<IActionResult> AddInvoiceReport([FromBody] InvoiceModel invoiceModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
             if (await _invoiceService.AddInvoiceReportAsync(invoiceModel))
             {

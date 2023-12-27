@@ -19,10 +19,12 @@ namespace ReportingProject.Services.InvoiceService
             _invoiceRepository = invoiceRepository;
             _mapper = mapper;
         }
+  
 
         public async Task<bool> AddInvoiceReportAsync(InvoiceModel invoiceModel)
 
         {
+   
             var invoiceEntity = _mapper.Map<Invoice>(invoiceModel);
             invoiceEntity.InvoiceNotes = _mapper.Map<List<InvoiceNote>>(invoiceModel.InvoiceNotes);
             invoiceEntity.LastModified = DateTime.Now;
