@@ -37,5 +37,11 @@ namespace ReportingProject.Repositories.ReportTypeRepository
         {
             throw new NotImplementedException();
         }
+
+        public async Task<int> GetReportTypeIdFromNameAsync(string name)
+        {
+            var reportType = await _dbSet.FirstOrDefaultAsync(rt => rt.Name == name);
+            return reportType == null ? throw new Exception("ReportType not found") : reportType.Id;
+        }
     }
 }

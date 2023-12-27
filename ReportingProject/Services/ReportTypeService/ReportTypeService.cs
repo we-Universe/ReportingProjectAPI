@@ -31,6 +31,12 @@ namespace ReportingProject.Services.ReportTypeService
             return _mapper.Map<IEnumerable<ReportTypeResource>>(reportsTypesEntities);
         }
 
+        public async Task<int> GetReportTypeIdFromNameAsync(string name)
+        {
+            int reportsTypeId = await _reportTypeRepository.GetReportTypeIdFromNameAsync(name);
+            return reportsTypeId;
+        }      
+
         public Task<ReportType> GetReportTypeByIdAsync(int id)
         {
             throw new NotImplementedException();

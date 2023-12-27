@@ -36,11 +36,15 @@
     <None Remove="Repositories\OperatorReportRepository\" />
     <None Remove="Services\ApprovalStatusesService\" />
     <None Remove="Repositories\ApprovalStatusesRepository\" />
+    <None Remove="Repositories\OperatorRepository\" />
+    <None Remove="Services\OperatorService\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\OperatorReportService\" />
     <Folder Include="Repositories\OperatorReportRepository\" />
     <Folder Include="Services\ApprovalStatusesService\" />
     <Folder Include="Repositories\ApprovalStatusesRepository\" />
+    <Folder Include="Repositories\OperatorRepository\" />
+    <Folder Include="Services\OperatorService\" />
   </ItemGroup>
 </Project>

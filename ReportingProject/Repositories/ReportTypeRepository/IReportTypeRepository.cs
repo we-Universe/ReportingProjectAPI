@@ -9,5 +9,6 @@ namespace ReportingProject.Repositories.ReportTypeRepository
         Task AddReportTypeAsync(ReportType entity);
         Task UpdateReportTypeAsync(ReportType entity);
         Task DeleteReportTypeAsync(int id);
+        Task<int> GetReportTypeIdFromNameAsync(string name);
     }
 }
