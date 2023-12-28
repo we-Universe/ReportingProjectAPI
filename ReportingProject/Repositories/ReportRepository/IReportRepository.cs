@@ -13,5 +13,6 @@ namespace ReportingProject.Repositories.ReportRepository
         Task<IEnumerable<Report>> GetReportByReportIdAsync(int reportId);
         Task<IEnumerable<ReportAndOperatorResource>> GetReportsByOperatorIdAsync();
         Task<IEnumerable<ReportAndOperatorAnotherFormatResource>> GetReportsByOperatorReportAsync();
+        Task<IEnumerable<ReportAndMerchantResource>> GetReportsByMerchantReportAsync();
     }
 }

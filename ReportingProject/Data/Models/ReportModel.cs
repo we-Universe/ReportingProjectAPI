@@ -4,6 +4,8 @@ namespace ReportingProject.Data.Models
 {
 	public class ReportModel
 	{
+        public int Id { get; set; }
+
         [Required]
         public int ReportTypeId { get; set; }
 

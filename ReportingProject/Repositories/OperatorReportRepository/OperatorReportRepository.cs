@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using Microsoft.EntityFrameworkCore;
 using ReportingProject.Data.Contextes;
 using ReportingProject.Data.Entities;
 
@@ -43,9 +44,22 @@ namespace ReportingProject.Repositories.OperatorReportRepository
             return await _dbSet.FindAsync(id) ?? throw new Exception("Operator Report not found");
         }
 
-        public Task UpdateReportAsync(OperatorReport entity)
+        public async Task UpdateReportAsync(OperatorReport entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _dbSet.Update(entity);
+                await _reportingDBContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error saving changes to the database.", ex);
+            }
+        }
+
+        public async Task<OperatorReport> GetOperatorReportByReportIdAsync(int reportId)
+        {
+            return await _dbSet.FirstOrDefaultAsync(or => or.ReportId == reportId) ?? throw new Exception("Operator Report not found");
         }
     }
 }

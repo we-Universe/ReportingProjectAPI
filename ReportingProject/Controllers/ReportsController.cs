@@ -52,11 +52,33 @@ namespace ReportingProject.Controllers
             return Ok(reports);
         }
 
+        [HttpGet("GetReportByMerchantReport")]
+        public async Task<IActionResult> GetReportByMerchantReport()
+        {
+            var reports = await _reportService.GetReportsByMerchantReportAsync();
+            return Ok(reports);
+        }
+
         [HttpGet("GetReportsByOperatorReport")]
         public async Task<IActionResult> GetReportsByOperatorReport()
         {
             var reports = await _reportService.GetReportsByOperatorReportAsync();
             return Ok(reports);
+        }
+
+        [HttpPut("EditReport")]
+        public async Task<IActionResult> EditReport([FromBody] ReportModel reportModel)
+        {
+            try
+            {
+               await _reportService.UpdateReportAsync(reportModel);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine($"Error editing report: {ex.Message}");
+                return StatusCode(500, "Internal server error");
+            }
         }
     }
 }

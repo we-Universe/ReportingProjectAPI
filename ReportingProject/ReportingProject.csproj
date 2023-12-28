@@ -38,6 +38,7 @@
     <None Remove="Repositories\ApprovalStatusesRepository\" />
     <None Remove="Repositories\OperatorRepository\" />
     <None Remove="Services\OperatorService\" />
+    <None Remove="Repositories\MerchantReportRepository\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\OperatorReportService\" />
@@ -46,5 +47,6 @@
     <Folder Include="Repositories\ApprovalStatusesRepository\" />
     <Folder Include="Repositories\OperatorRepository\" />
     <Folder Include="Services\OperatorService\" />
+    <Folder Include="Repositories\MerchantReportRepository\" />
   </ItemGroup>
 </Project>

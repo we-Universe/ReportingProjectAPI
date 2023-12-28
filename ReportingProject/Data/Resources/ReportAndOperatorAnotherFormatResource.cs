@@ -3,6 +3,8 @@
 	public class ReportAndOperatorAnotherFormatResource
 	{
         public int Id { get; set; }
+        public int Month { get; set; }
+        public int Year { get; set; }
         public string Type { get; set; } = string.Empty;
         public byte[]? File { get; set; }
         public byte[]? DifferencesFile { get; set; }

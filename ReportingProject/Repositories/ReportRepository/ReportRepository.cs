@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using ReportingProject.Data.Contextes;
 using ReportingProject.Data.Entities;
 using ReportingProject.Data.Resources;
+using ReportingProject.Repositories.MerchantReportRepository;
 using ReportingProject.Repositories.OperatorReportRepository;
 
 namespace ReportingProject.Repositories.ReportRepository
@@ -12,11 +13,13 @@ namespace ReportingProject.Repositories.ReportRepository
         private readonly ReportingDBContext _reportingDBContext;
         private readonly DbSet<Report> _dbSet;
         private readonly  IOperatorReportRepository _reportOperatorRepository;
+        private readonly IMerchantReportRepository _reportMerchantRepository;
 
-        public ReportRepository(ReportingDBContext reportingDBContex, IOperatorReportRepository reportOperatorRepository) {
+        public ReportRepository(ReportingDBContext reportingDBContex, IOperatorReportRepository reportOperatorRepository, IMerchantReportRepository reportMerchantRepository) {
             _reportingDBContext = reportingDBContex;
             _dbSet = _reportingDBContext.Set<Report>();
             _reportOperatorRepository = reportOperatorRepository;
+            _reportMerchantRepository = reportMerchantRepository;
         }
 
         public async Task UploadReportAsync(Report entity)
@@ -47,9 +50,17 @@ namespace ReportingProject.Repositories.ReportRepository
             return await _dbSet.FindAsync(id) ?? throw new Exception("Report not found");
         }
 
-        public Task UpdateReportAsync(Report entity)
+        public async Task UpdateReportAsync(Report entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _dbSet.Update(entity);
+                await _reportingDBContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error saving changes to the database.", ex);
+            }
         }
 
         public async Task<IEnumerable<Report>> GetReportByReportIdAsync(int reportId)
@@ -115,6 +126,48 @@ namespace ReportingProject.Repositories.ReportRepository
             }
         }
 
+        public async Task<IEnumerable<ReportAndMerchantResource>> GetReportsByMerchantReportAsync()
+        {
+            try
+            {
+                var merchantReports = await _reportMerchantRepository.GetAllReportsAsync();
+
+                var distinctReportIds = merchantReports
+                    .Select(merchantReport => merchantReport.ReportId)
+                    .Distinct()
+                    .ToList();
+
+                var reports = await _dbSet
+                    .Where(report => distinctReportIds.Contains(report.Id))
+                    .Include(report => report.ReportType)
+                    .Include(report => report.ApprovalStatus)
+                    .Include(report => report.OperatorReport)
+                        .ThenInclude(operatorReport => operatorReport.Operator)
+                            .ThenInclude(operatorEntity => operatorEntity.Company)
+                    .Include(report => report.ReportNotes)
+                    .ToListAsync();
+
+                var result = reports.Select(report => new ReportAndMerchantResource
+                {
+                    Id = report.Id,
+                    Type = report.ReportType?.Name ?? string.Empty,
+                    File = report.ReportFile,
+                    Notes = report.ReportNotes?.Select(note => new Note { Id = note.Id, Content = note.Content }).ToList() ?? new List<Note>(),
+                    Approved = (report.ApprovalStatus?.Id >= 5) ? 1 : 0,
+                    Month = report.Month,
+                    Year = report.Year,
+                    MerchantName = report.OperatorReport?.Operator?.Company?.Name ?? string.Empty,
+                    Status = report.ApprovalStatus?.Name ?? string.Empty
+                });
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error fetching reports from the database.", ex);
+            }
+        }
+        
         public async Task<IEnumerable<ReportAndOperatorAnotherFormatResource>> GetReportsByOperatorReportAsync()
         {
             try
@@ -143,6 +196,8 @@ namespace ReportingProject.Repositories.ReportRepository
                 var result = joinedReports.Select(joinedReport => new ReportAndOperatorAnotherFormatResource
                 {
                     Id = joinedReport.Report.Id,
+                    Month = joinedReport.Report.Month,
+                    Year = joinedReport.Report.Year,
                     Type = joinedReport.Report.ReportType?.Name ?? string.Empty,
                     File = joinedReport.Report.ReportFile,
                     DifferencesFile = joinedReport.OperatorReport.DifferencesFile,

@@ -22,6 +22,7 @@ using ReportingProject.Repositories.ApprovalStatusesRepository;
 using ReportingProject.Services.ApprovalStatusesService;
 using ReportingProject.Services.OperatorService;
 using ReportingProject.Repositories.OperatorRepository;
+using ReportingProject.Repositories.MerchantReportRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -87,6 +88,7 @@ builder.Services.AddScoped<IApprovalStatusesService, ApprovalStatusesService>();
 builder.Services.AddScoped<IApprovalStatusesRepository, ApprovalStatusesRepository>();
 builder.Services.AddScoped<IOperatorService, OperatorService>();
 builder.Services.AddScoped<IOperatorRepository, OperatorRepository>();
+builder.Services.AddScoped<IMerchantReportRepository, MerchantReportRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
