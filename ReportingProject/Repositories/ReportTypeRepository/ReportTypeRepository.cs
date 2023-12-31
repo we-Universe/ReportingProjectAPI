@@ -43,5 +43,10 @@ namespace ReportingProject.Repositories.ReportTypeRepository
             var reportType = await _dbSet.FirstOrDefaultAsync(rt => rt.Name == name);
             return reportType == null ? throw new Exception("ReportType not found") : reportType.Id;
         }
+
+        public async Task<IEnumerable<string>> GetAllReportTypeNamesAsync()
+        {
+            return await _dbSet.Select(rt => rt.Name).ToListAsync();
+        }
     }
 }

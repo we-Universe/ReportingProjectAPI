@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using DocumentFormat.OpenXml.Bibliography;
 using ReportingProject.Data.Entities;
 using ReportingProject.Data.Models;
 using ReportingProject.Data.Resources;
+using ReportingProject.Repositories.MerchantReportRepository;
 using ReportingProject.Repositories.OperatorReportRepository;
 using ReportingProject.Repositories.ReportRepository;
 
@@ -14,7 +14,7 @@ namespace ReportingProject.Services.ReportService
         private readonly IOperatorReportRepository _reportOperatorRepository;
         private readonly IMapper _mapper;
 
-        public ReportService(IReportRepository reportRepository, IMapper mapper, IOperatorReportRepository reportOperatorRepository)
+        public ReportService(IReportRepository reportRepository, IMapper mapper, IOperatorReportRepository reportOperatorRepository, IMerchantReportRepository reportMerchantRepository)
         {
             _reportRepository = reportRepository;
             _mapper = mapper;
@@ -85,6 +85,29 @@ namespace ReportingProject.Services.ReportService
         {
             var reportsEntities = await _reportRepository.GetReportsByOperatorReportAsync();
             return _mapper.Map<IEnumerable<ReportAndOperatorAnotherFormatResource>>(reportsEntities);
+        }
+
+        public async Task<IEnumerable<ReportAndMerchantResource>> GetReportsByMerchantReportAsync()
+        {
+            var reportsEntities = await _reportRepository.GetReportsByMerchantReportAsync();
+            return _mapper.Map<IEnumerable<ReportAndMerchantResource>>(reportsEntities);
+        }
+
+        public async Task UpdateReportAsync(ReportModel model)
+        {
+            try
+            {
+                var reportEntity = await _reportRepository.GetReportByIdAsync(model.Id);
+                reportEntity = _mapper.Map(model, reportEntity);
+                await _reportRepository.UpdateReportAsync(reportEntity);
+                var operatorReportEntity = await _reportOperatorRepository.GetOperatorReportByReportIdAsync(model.Id);
+                await _reportOperatorRepository.UpdateReportAsync(operatorReportEntity);
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex.Message);
+                throw;
+            }
         }
     }
 }

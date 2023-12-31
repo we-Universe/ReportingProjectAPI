@@ -14,5 +14,7 @@ namespace ReportingProject.Services.ReportService
         Task DeleteReportAsync(int id);
         Task<IEnumerable<ReportAndOperatorResource>> GetReportByOperatorReportIdAsync();
         Task<IEnumerable<ReportAndOperatorAnotherFormatResource>> GetReportsByOperatorReportAsync();
+        Task UpdateReportAsync(ReportModel model);
+        Task<IEnumerable<ReportAndMerchantResource>> GetReportsByMerchantReportAsync();
     }
 }
