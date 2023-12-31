@@ -29,6 +29,7 @@ namespace ReportingProject.Controllers
 
                 if (merchantId.HasValue)
                 {
+                    contractModel.MerchantId = merchantId;
                     await _contractService.UploadContractAsync(contractModel);
 
                     return Ok();
