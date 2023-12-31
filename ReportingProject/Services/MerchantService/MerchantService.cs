@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ReportingProject.Data.Resources;
 using ReportingProject.Repositories.MerchantRepository;
 
 namespace ReportingProject.Services.MerchantService
@@ -17,6 +18,12 @@ namespace ReportingProject.Services.MerchantService
         public async Task<int?> GetMerchantIdByEmployeeNameAsync(string employeeName)
         {
             return await _merchantreportRepository.GetMerchantIdByEmployeeNameAsync(employeeName);
+        }
+
+        public async Task<IEnumerable<string>> GetAllMerchantNamesAsync()
+        {
+            var merchantNames = await _merchantreportRepository.GetAllMerchantNamesAsync();
+            return _mapper.Map<IEnumerable<string>>(merchantNames);
         }
     }
 }

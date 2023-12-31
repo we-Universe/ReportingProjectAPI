@@ -28,6 +28,8 @@ using ReportingProject.Services.ContractService;
 using ReportingProject.Services.MerchantService;
 using ReportingProject.Repositories.MerchantRepository;
 using ReportingProject.Services.MerchantReportService;
+using ReportingProject.Services.RevenueService;
+using ReportingProject.Repositories.RevenueRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -100,6 +102,8 @@ builder.Services.AddScoped<IContractService, ContractService>();
 builder.Services.AddScoped<IContractRepository, ContractRepository>();
 builder.Services.AddScoped<IMerchantService, MerchantService>();
 builder.Services.AddScoped<IMerchantRepository, MerchantRepository>();
+builder.Services.AddScoped<IRevenueService, RevenueService>();
+builder.Services.AddScoped<IRevenueRepository, RevenueRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

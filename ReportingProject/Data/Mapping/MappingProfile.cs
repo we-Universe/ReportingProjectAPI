@@ -22,6 +22,7 @@ namespace ReportingProject.Data.Mapping
             CreateMap<MerchantReport, ReportAndMerchantResource>().ReverseMap();
             CreateMap<Contract, ContractModel>().ReverseMap();
             CreateMap<MerchantReport, MerchantReportResource>().ReverseMap();
+            CreateMap<Revenue, RevenueModel>().ReverseMap();
         }
     }
 }
