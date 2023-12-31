@@ -69,6 +69,23 @@ namespace ReportingProject.Services.RevenueService
                         var serviceName = worksheet_3.Cell(row, 3).Value.ToString();
                         var TotalSubscriptions = (double)worksheet_3.Cell(row,5).Value;
                     }
+
+                    var worksheet_4 = workbook.Worksheet(4);
+
+                    Dictionary<string, decimal> serviceRefundDictionary = new Dictionary<string, decimal>();
+                    for (int row = 2; row <= worksheet_4.RowsUsed().Count(); row++)
+                    {
+                        var serviceName = worksheet_4.Cell(row, 2).Value.ToString();
+
+                        if (decimal.TryParse(worksheet_4.Cell(row, 5).Value.ToString(), out decimal refund))
+                        {
+                            serviceRefundDictionary[serviceName] = refund;
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Error parsing refund for service '{serviceName}' at row {row}");
+                        }
+                    }
                 }
             }
         }
