@@ -4,6 +4,6 @@ namespace ReportingProject.Repositories.MerchantReportRepository
 {
 	public interface IMerchantReportRepository
 	{
-        Task<IEnumerable<MerchantReport>> GetAllReportsAsync();
+        Task<IEnumerable<MerchantReport>> GetAllMerchantsReports();
     }
 }

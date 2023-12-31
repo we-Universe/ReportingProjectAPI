@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using ReportingProject.Data.Entities;
 
 namespace ReportingProject.Data.Contextes
@@ -11,6 +12,9 @@ namespace ReportingProject.Data.Contextes
 
 
         }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+       => optionsBuilder
+       .ConfigureWarnings(warnings => warnings.Ignore(CoreEventId.NavigationBaseIncludeIgnored, CoreEventId.NavigationBaseIncluded));
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ApplicationUser>()

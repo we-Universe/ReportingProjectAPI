@@ -5,7 +5,7 @@
         public int Id { get; set; }
         public int? IndustryTypeId { get; set; }
         public IndustryType? IndustryType { get; set; }
-        public int? EmloyeeId { get; set; }
+        public int? EmployeeId { get; set; }
         public Employee? Employee { get; set; }
         public int? ConsultantId { get; set; }
         public Consultant? Consultant { get; set; }

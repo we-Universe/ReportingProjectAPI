@@ -130,7 +130,7 @@ namespace ReportingProject.Repositories.ReportRepository
         {
             try
             {
-                var merchantReports = await _reportMerchantRepository.GetAllReportsAsync();
+                var merchantReports = await _reportMerchantRepository.GetAllMerchantsReports();
 
                 var distinctReportIds = merchantReports
                     .Select(merchantReport => merchantReport.ReportId)

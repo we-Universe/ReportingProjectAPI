@@ -23,10 +23,14 @@ using ReportingProject.Services.ApprovalStatusesService;
 using ReportingProject.Services.OperatorService;
 using ReportingProject.Repositories.OperatorRepository;
 using ReportingProject.Repositories.MerchantReportRepository;
+<<<<<<< HEAD
 using ReportingProject.Repositories.ContractRepository;
 using ReportingProject.Services.ContractService;
 using ReportingProject.Services.MerchantService;
 using ReportingProject.Repositories.MerchantRepository;
+=======
+using ReportingProject.Services.MerchantReportService;
+>>>>>>> e19ff3cd6f0c13b57f87926165b5af12710aadca
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -84,6 +88,8 @@ builder.Services.AddScoped<ICountryService, CountryService>();
 builder.Services.AddScoped<ICountryRepository, CountryRepository>();
 builder.Services.AddScoped<IReportTypeService, ReportTypeService>();
 builder.Services.AddScoped<IReportRepository, ReportRepository>();
+builder.Services.AddScoped<IMerchantReportRepository, MerchantReportRepository>();
+builder.Services.AddScoped<IMerchantReportService, MerchantReportService>();
 builder.Services.AddScoped<IReportTypeRepository, ReportTypeRepository>();
 builder.Services.AddScoped<IOperatorReportRepository, OperatorReportRepository>();
 builder.Services.AddScoped<IInvoiceService, InvoiceService>();
@@ -92,11 +98,14 @@ builder.Services.AddScoped<IApprovalStatusesService, ApprovalStatusesService>();
 builder.Services.AddScoped<IApprovalStatusesRepository, ApprovalStatusesRepository>();
 builder.Services.AddScoped<IOperatorService, OperatorService>();
 builder.Services.AddScoped<IOperatorRepository, OperatorRepository>();
+<<<<<<< HEAD
 builder.Services.AddScoped<IMerchantReportRepository, MerchantReportRepository>();
 builder.Services.AddScoped<IContractService, ContractService>();
 builder.Services.AddScoped<IContractRepository, ContractRepository>();
 builder.Services.AddScoped<IMerchantService, MerchantService>();
 builder.Services.AddScoped<IMerchantRepository, MerchantRepository>();
+=======
+>>>>>>> e19ff3cd6f0c13b57f87926165b5af12710aadca
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
