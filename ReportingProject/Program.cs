@@ -22,6 +22,8 @@ using ReportingProject.Repositories.ApprovalStatusesRepository;
 using ReportingProject.Services.ApprovalStatusesService;
 using ReportingProject.Services.OperatorService;
 using ReportingProject.Repositories.OperatorRepository;
+using ReportingProject.Repositories.MerchantReportRepository;
+using ReportingProject.Services.MerchantReportService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -79,6 +81,8 @@ builder.Services.AddScoped<ICountryService, CountryService>();
 builder.Services.AddScoped<ICountryRepository, CountryRepository>();
 builder.Services.AddScoped<IReportTypeService, ReportTypeService>();
 builder.Services.AddScoped<IReportRepository, ReportRepository>();
+builder.Services.AddScoped<IMerchantReportRepository, MerchantReportRepository>();
+builder.Services.AddScoped<IMerchantReportService, MerchantReportService>();
 builder.Services.AddScoped<IReportTypeRepository, ReportTypeRepository>();
 builder.Services.AddScoped<IOperatorReportRepository, OperatorReportRepository>();
 builder.Services.AddScoped<IInvoiceService, InvoiceService>();
