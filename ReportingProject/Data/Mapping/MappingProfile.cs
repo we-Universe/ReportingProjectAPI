@@ -20,6 +20,7 @@ namespace ReportingProject.Data.Mapping
             CreateMap<Country, CountryResource>().ReverseMap();
             CreateMap<ApprovalStatus, ApprovalStatusesResource>().ReverseMap();
             CreateMap<MerchantReport, ReportAndMerchantResource>().ReverseMap();
+            CreateMap<Contract, ContractModel>().ReverseMap();
         }
     }
 }

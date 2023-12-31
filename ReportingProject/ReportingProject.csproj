@@ -39,6 +39,10 @@
     <None Remove="Repositories\OperatorRepository\" />
     <None Remove="Services\OperatorService\" />
     <None Remove="Repositories\MerchantReportRepository\" />
+    <None Remove="Services\ContractService\" />
+    <None Remove="Repositories\ContractRepository\" />
+    <None Remove="Services\MerchantService\" />
+    <None Remove="Repositories\MerchantRepository\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\OperatorReportService\" />
@@ -48,5 +52,9 @@
     <Folder Include="Repositories\OperatorRepository\" />
     <Folder Include="Services\OperatorService\" />
     <Folder Include="Repositories\MerchantReportRepository\" />
+    <Folder Include="Services\ContractService\" />
+    <Folder Include="Repositories\ContractRepository\" />
+    <Folder Include="Services\MerchantService\" />
+    <Folder Include="Repositories\MerchantRepository\" />
   </ItemGroup>
 </Project>
