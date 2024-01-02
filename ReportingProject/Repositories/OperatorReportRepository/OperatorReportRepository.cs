@@ -61,5 +61,13 @@ namespace ReportingProject.Repositories.OperatorReportRepository
         {
             return await _dbSet.FirstOrDefaultAsync(or => or.ReportId == reportId) ?? throw new Exception("Operator Report not found");
         }
+
+        public async Task<int> GetOperatorIdFromReportIdAsync(int reportId)
+        {
+            var operatorReport = await _dbSet
+                .FirstOrDefaultAsync(or => or.ReportId == reportId);
+
+            return operatorReport?.Id ?? 0; 
+        }
     }
 }

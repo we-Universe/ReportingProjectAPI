@@ -16,15 +16,11 @@ namespace ReportingProject.Controllers
         }
 
         [HttpPost("AddRevenue")]
-        public async Task<IActionResult> CreateRevenue([FromBody] RevenueReportModel revenueModel)
+        public async Task<IActionResult> CreateRevenue([FromForm] RevenueReportModel revenueModel)
         {
             try
             {
-                string excelFilePath = "/Users/mayar/desktop/UT oct 2023 Jawwal report.xlsx";
-                IFormFile iformFile = _revenueService.ConvertToIFormFile(excelFilePath);
-
-                 _revenueService.ProcessExcelFile(iformFile);
-                // await _revenueService.UploadRevenueAsync(revenueModel);
+                await _revenueService.ProcessExcelFile(revenueModel.RevenueFile, revenueModel.Month, revenueModel.Year);
                 return Ok();
             }
             catch (Exception ex)

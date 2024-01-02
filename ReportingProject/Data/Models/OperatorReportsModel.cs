@@ -2,6 +2,8 @@
 {
 	public class OperatorReportsModel 
     {
+        public int Id { get; set; }
+
         public int ReportId { get; set; }
 
         public int OperatorId { get; set; }

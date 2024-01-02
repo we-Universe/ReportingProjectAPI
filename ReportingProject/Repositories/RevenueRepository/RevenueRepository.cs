@@ -30,4 +30,3 @@ namespace ReportingProject.Repositories.RevenueRepository
         }
     }
 }
-
