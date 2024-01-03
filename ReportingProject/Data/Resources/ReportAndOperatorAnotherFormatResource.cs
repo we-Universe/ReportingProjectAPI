@@ -1,4 +1,6 @@
-﻿namespace ReportingProject.Data.Resources
+﻿using ReportingProject.Data.Entities;
+
+namespace ReportingProject.Data.Resources
 {
 	public class ReportAndOperatorAnotherFormatResource
 	{
@@ -11,7 +13,7 @@
         public byte[]? MWFile { get; set; }
         public byte[]? IMIFile { get; set; }
         public byte[]? RefundFile { get; set; }
-        public List<Note> Notes { get; set; } = new List<Note>();
+        public List<ReportNote> Notes { get; set; } = new List<ReportNote>();
         public int Approved { get; set; }
         public string TelecomName { get; set; } = string.Empty;
     }

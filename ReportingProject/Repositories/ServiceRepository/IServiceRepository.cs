@@ -3,5 +3,7 @@
 	public interface IServiceRepository
 	{
         Task<int> GetServiceIdFromServiceNameAsync(string name);
+        Task<decimal> GetClientShareFromServiceNameAsync(string name);
+        Task<bool> IsOutsidePalestineAsync(string name);
     }
 }

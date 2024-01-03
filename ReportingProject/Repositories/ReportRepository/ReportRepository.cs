@@ -1,4 +1,7 @@
-﻿using DocumentFormat.OpenXml.InkML;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using DocumentFormat.OpenXml.InkML;
 using Microsoft.EntityFrameworkCore;
 using ReportingProject.Data.Contextes;
 using ReportingProject.Data.Entities;
@@ -26,7 +29,7 @@ namespace ReportingProject.Repositories.ReportRepository
         {
             try
             {
-                await _dbSet.AddAsync(entity);
+                _reportingDBContext.Reports.Add(entity);
                 await _reportingDBContext.SaveChangesAsync();
             }
             catch (Exception ex)
@@ -110,7 +113,7 @@ namespace ReportingProject.Repositories.ReportRepository
                     Id = report.Id,
                     Type = report.ReportType?.Name ?? string.Empty,
                     File = report.ReportFile,
-                    Notes = report.ReportNotes?.Select(note => new Note { Id = note.Id, Content = note.Content }).ToList() ?? new List<Note>(),
+                    Notes = report.ReportNotes?.Select(note => new ReportNote { ReportId = note.ReportId, Content = note.Content }).ToList() ?? new List<ReportNote>(),
                     Approved = (report.ApprovalStatus?.Id >= 5) ? 1 : 0,
                     Month = report.Month,
                     Year = report.Year,
@@ -152,7 +155,7 @@ namespace ReportingProject.Repositories.ReportRepository
                     Id = report.Id,
                     Type = report.ReportType?.Name ?? string.Empty,
                     File = report.ReportFile,
-                    Notes = report.ReportNotes?.Select(note => new Note { Id = note.Id, Content = note.Content }).ToList() ?? new List<Note>(),
+                    Notes = report.ReportNotes?.Select(note => new ReportNote { ReportId = note.ReportId, Content = note.Content }).ToList() ?? new List<ReportNote>(),
                     Approved = (report.ApprovalStatus?.Id >= 5) ? 1 : 0,
                     Month = report.Month,
                     Year = report.Year,
@@ -167,7 +170,7 @@ namespace ReportingProject.Repositories.ReportRepository
                 throw new Exception("Error fetching reports from the database.", ex);
             }
         }
-        
+
         public async Task<IEnumerable<ReportAndOperatorAnotherFormatResource>> GetReportsByOperatorReportAsync()
         {
             try
@@ -204,7 +207,11 @@ namespace ReportingProject.Repositories.ReportRepository
                     MWFile = joinedReport.OperatorReport.MWFile,
                     IMIFile = joinedReport.OperatorReport.IMIFile,
                     RefundFile = joinedReport.OperatorReport.RefundFile,
-                    Notes = joinedReport.Report.ReportNotes?.Select(note => new Note { Id = note.Id, Content = note.Content }).ToList() ?? new List<Note>(),
+                    Notes = joinedReport.Report.ReportNotes?.Select(note => new ReportNote
+                    {
+                        ReportId = note.ReportId,
+                        Content = note.Content
+                    }).ToList() ?? new List<ReportNote>(),
                     Approved = (joinedReport.Report.ApprovalStatus?.Id == 5) ? 1 : 0,
                     TelecomName = joinedReport.Report.OperatorReport?.Operator?.Company?.Name ?? string.Empty,
                 });

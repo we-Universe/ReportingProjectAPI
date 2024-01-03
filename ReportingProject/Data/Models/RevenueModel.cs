@@ -8,5 +8,7 @@
         public int TotalSubscriptions { get; set; }
         public int PostSubscriptions { get; set; }
         public decimal Refund { get; set; }
+        public decimal MerchantRevenue { get; set; }
+        public decimal UniverseRevenue { get; set; }
     }
 }

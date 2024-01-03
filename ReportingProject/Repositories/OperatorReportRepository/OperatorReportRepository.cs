@@ -48,12 +48,22 @@ namespace ReportingProject.Repositories.OperatorReportRepository
         {
             try
             {
-                _dbSet.Update(entity);
+                var existingEntity = await _dbSet.FindAsync(entity.Id);
+
+                if (existingEntity != null)
+                {
+                    _reportingDBContext.Entry(existingEntity).State = EntityState.Detached;
+                }
+
+                _dbSet.Attach(entity);
+                _reportingDBContext.Entry(entity).State = EntityState.Modified;
+
                 await _reportingDBContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
-                throw new Exception("Error saving changes to the database.", ex);
+                Console.WriteLine($"Error saving changes to the database: {ex.Message}");
+                throw;
             }
         }
 

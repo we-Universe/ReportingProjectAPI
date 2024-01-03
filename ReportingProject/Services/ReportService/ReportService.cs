@@ -27,6 +27,8 @@ namespace ReportingProject.Services.ReportService
             try
             {
                 var reportEntity = _mapper.Map<Report>(model);
+                reportEntity.ReportNotes = _mapper.Map<List<ReportNote>>(model.Notes);
+                reportEntity.ReportNotes.ForEach(note => note.ReportId = reportEntity.Id);
                 await _reportRepository.UploadReportAsync(reportEntity);
 
                 var operatorReport = new OperatorReportsModel
@@ -95,6 +97,10 @@ namespace ReportingProject.Services.ReportService
             {
                 var reportEntity = await _reportRepository.GetReportByIdAsync(model.Id);
                 reportEntity = _mapper.Map(model, reportEntity);
+
+                reportEntity.ReportNotes = _mapper.Map<List<ReportNote>>(model.Notes);
+                reportEntity.ReportNotes.ForEach(note => note.ReportId = reportEntity.Id);
+
                 await _reportRepository.UpdateReportAsync(reportEntity);
                 int id = await _reportOperatorRepository.GetOperatorIdFromReportIdAsync(model.Id);
 

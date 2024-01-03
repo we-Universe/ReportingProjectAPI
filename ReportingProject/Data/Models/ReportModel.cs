@@ -29,5 +29,7 @@ namespace ReportingProject.Data.Models
         public byte[]? MWFile { get; set; }
 
         public byte[]? RefundFile { get; set; }
+
+        public List<NoteModel> Notes { get; set; } = new List<NoteModel>();
     }
 }

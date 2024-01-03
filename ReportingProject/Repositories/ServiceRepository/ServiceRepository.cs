@@ -20,5 +20,26 @@ namespace ReportingProject.Repositories.ServiceRepository
             var serviceId = await _dbSet.FirstOrDefaultAsync(rt => rt.Name == name);
             return serviceId == null ? throw new Exception("Service not found") : serviceId.Id;
         }
+
+        public async Task<decimal> GetClientShareFromServiceNameAsync(string name)
+        {
+            var clientShare = await _dbSet
+                .Where(rt => rt.Name == name)
+                .Select(rt => rt.Contract.ClientShare)
+                .FirstOrDefaultAsync();
+
+            return clientShare;
+        }
+
+        public async Task<bool> IsOutsidePalestineAsync(string name)
+        {
+            var isOutsidePalestine = await _dbSet
+                .Where(rt => rt.Name == name)
+                .Select(rt => rt.ServiceOperators
+                    .Any(so => so.Operator.Company.Country.Name != "Palestine"))
+                .FirstOrDefaultAsync();
+
+            return isOutsidePalestine;
+        }
     }
 }

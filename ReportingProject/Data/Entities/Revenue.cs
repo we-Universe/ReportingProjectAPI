@@ -16,5 +16,4 @@ namespace ReportingProject.Data.Entities
         public decimal UniverseRevenue { get; set; }
         public Service? Service { get; set; }
     }
-
 }
