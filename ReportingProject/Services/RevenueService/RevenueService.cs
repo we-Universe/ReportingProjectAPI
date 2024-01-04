@@ -58,8 +58,9 @@ namespace ReportingProject.Services.RevenueService
                         int serviceId = await _serviceRepository.GetServiceIdFromServiceNameAsync(serviceName.ToString());
                         int TotalSubscriptions = (int)worksheet.Cell(row, 9).Value + (int)worksheet.Cell(row, 10).Value;
                         int PostSubscriptions = (int)worksheet.Cell(row, 10).Value;
-                        decimal merchantRevenue = (int)worksheet.Cell(row, 13).Value * clientShare * (isOutsidePalestineAsync ? 0.9m : 1.0m);
-                        decimal universeRevenue = (int)worksheet.Cell(row, 13).Value * (1-clientShare);
+                        var revenue = decimal.TryParse(worksheet.Cell(row, 13).Value.ToString(), out var result) ? result : 0;
+                        decimal merchantRevenue = revenue * clientShare * (isOutsidePalestineAsync ? 0.9m : 1.0m);
+                        decimal universeRevenue = revenue * (1-clientShare);
 
                         var revenueModel = new RevenueModel
                         {
@@ -87,8 +88,9 @@ namespace ReportingProject.Services.RevenueService
                         int serviceId = await _serviceRepository.GetServiceIdFromServiceNameAsync(serviceName.ToString());
                         var TotalSubscriptions = (int)worksheet_2.Cell(row, 10).Value;
                         var PostSubscriptions = (int)worksheet_2.Cell(row, 9).Value;
-                        decimal merchantRevenue = (int)worksheet.Cell(row, 13).Value * clientShare * (isOutsidePalestineAsync ? 0.9m : 1.0m);
-                        decimal universeRevenue = (int)worksheet.Cell(row, 13).Value * (1 - clientShare);
+                        var revenue = decimal.TryParse(worksheet.Cell(row, 13).Value.ToString(), out var result) ? result : 0;
+                        decimal merchantRevenue = revenue * clientShare * (isOutsidePalestineAsync ? 0.9m : 1.0m);
+                        decimal universeRevenue = revenue * (1 - clientShare);
 
                         var revenueModel = new RevenueModel
                         {
@@ -145,8 +147,9 @@ namespace ReportingProject.Services.RevenueService
                             var refundValue = tempRefundValue;
                             var TotalSubscriptions = (int)worksheet_3.Cell(row, 5).Value;
                             int serviceId = await _serviceRepository.GetServiceIdFromServiceNameAsync(serviceName.ToString());
-                            decimal merchantRevenue = ((int)worksheet.Cell(row, 9).Value- refundValue) * clientShare * (isOutsidePalestineAsync ? 0.9m : 1.0m);
-                            decimal universeRevenue = ((int)worksheet.Cell(row, 9).Value - refundValue) * (1 - clientShare);
+                            var revenue = decimal.TryParse(worksheet.Cell(row, 9).Value.ToString(), out var result) ? result : 0;
+                            decimal merchantRevenue = (revenue - refundValue) * clientShare * (isOutsidePalestineAsync ? 0.9m : 1.0m);
+                            decimal universeRevenue = (revenue - refundValue) * (1 - clientShare);
 
                             var revenueModel = new RevenueModel
                             {
