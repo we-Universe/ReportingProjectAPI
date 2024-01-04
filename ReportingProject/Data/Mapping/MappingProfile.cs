@@ -18,7 +18,7 @@ namespace ReportingProject.Data.Mapping
             CreateMap<OperatorReport, OperatorReportsModel>().ReverseMap();
             CreateMap<OperatorReport, OperatorReportsResource>().ReverseMap();
             CreateMap<Country, CountryResource>().ReverseMap();
-
+            CreateMap<ApprovalStatus, ApprovalStatusesResource>().ReverseMap();
         }
     }
 }

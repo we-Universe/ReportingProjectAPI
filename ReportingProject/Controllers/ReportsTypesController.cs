@@ -21,5 +21,12 @@ namespace ReportingProject.Controllers
             var reportsTypes = await _reportTypeService.GetAllReportsTypesAsync();
             return Ok(reportsTypes);
         }
+
+        [HttpGet("GetReportTypeIdFromName")]
+        public async Task<IActionResult> GetReportTypeIdFromName(string name)
+        {
+            var reportsTypes = await _reportTypeService.GetReportTypeIdFromNameAsync(name);
+            return Ok(reportsTypes);
+        }
     }
 }

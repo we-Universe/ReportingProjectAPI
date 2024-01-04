@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using DocumentFormat.OpenXml.Bibliography;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using ReportingProject.Data.Entities;
 using ReportingProject.Data.Models;
 using ReportingProject.Data.Resources;

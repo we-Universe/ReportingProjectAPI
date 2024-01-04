@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ReportingProject.Data.Models;
 using ReportingProject.Services.ExcelService;
-using ReportingProject.Services.InvoiceService;
 
 namespace ReportingProject.Controllers
 {
@@ -21,7 +20,7 @@ namespace ReportingProject.Controllers
         {
             try
             {
-                var mergedFileModel = _excelService.MergeExcelFiles(files);
+                var mergedFileModel = _excelService.MergeExcelFilesAsync(files);
                 return Ok(mergedFileModel);
             }
             catch (ArgumentException ex)

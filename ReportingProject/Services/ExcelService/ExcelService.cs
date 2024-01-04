@@ -1,32 +1,46 @@
-﻿using OfficeOpenXml;
+﻿using ClosedXML.Excel;
 using ReportingProject.Data.Models;
 using ReportingProject.Data.Resources;
+using ReportingProject.Helpers.MergeExcelHelper;
+
 
 namespace ReportingProject.Services.ExcelService
 {
     public class ExcelService : IExcelService
     {
-        static ExcelService()
+        private readonly IMergeExcelHelper _mergeExcelHelper; 
+
+        public ExcelService(  IMergeExcelHelper mergeExcelHelper)
         {
-            // Set the license context
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+          
+            _mergeExcelHelper = mergeExcelHelper;
         }
-        public MergedFileResource MergeExcelFiles(FileModel files)
+
+        public async Task<MergedFileResource> MergeExcelFilesAsync(FileModel files)
         {
             try
             {
-                using (var package = new ExcelPackage())
+                using (var workbook = new XLWorkbook())
                 {
-                 
-                    AddWorksheetFromExcelFile(package, files.PushFile, "push");
-                    AddWorksheetFromExcelFile(package, files.PullFile, "pull");
-                    AddWorksheetFromExcelFile(package, files.DcbFile, "DCB");
+                    var (serviceDataDictionary, pushFreeServices) = await _mergeExcelHelper.ReadPushFile(files.PushFile);
+                    var pushFile = _mergeExcelHelper.WritePushFile(serviceDataDictionary, pushFreeServices);
 
+                    var pullDictionary = await _mergeExcelHelper.ReadPullFile(files.PullFile);
+                    var pullFile = _mergeExcelHelper.WritePullFile(pullDictionary);
+
+                    var dcbDictionary = await _mergeExcelHelper.ReadDCBFile(files.DcbFile);
+                    var dcbFile = _mergeExcelHelper.WriteDCBFile(dcbDictionary);
+
+                    _mergeExcelHelper.AddWorksheetFromExcelFile(workbook, pushFile, "push");
+                    _mergeExcelHelper.AddWorksheetFromExcelFile(workbook, pullFile, "pull");
+                    _mergeExcelHelper.AddWorksheetFromExcelFile(workbook, dcbFile, "DCB");
+                   
                     using (var stream = new MemoryStream())
                     {
-                        package.SaveAs(stream);
+                        workbook.SaveAs(stream);
 
                         var mergedFileBytes = stream.ToArray();
+                       
 
                         var mergedFileResource = new MergedFileResource
                         {
@@ -44,20 +58,5 @@ namespace ReportingProject.Services.ExcelService
             }
         }
 
-        private void AddWorksheetFromExcelFile(ExcelPackage package, IFormFile file, string sheetName)
-        {
-            if (file != null && file.Length > 0)
-            {
-                using (var memoryStream = new MemoryStream())
-                {
-                    file.CopyTo(memoryStream);
-                    using (var excelPackage = new ExcelPackage(memoryStream))
-                    {
-                        var worksheet = excelPackage.Workbook.Worksheets[0];
-                        var newWorksheet = package.Workbook.Worksheets.Add(sheetName, worksheet);
-                    }
-                }
-            }
-        }
     }
 }

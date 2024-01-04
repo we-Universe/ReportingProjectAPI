@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-
-namespace ReportingProject.Data.Entities
+﻿namespace ReportingProject.Data.Entities
 {
     public class Operator
     {

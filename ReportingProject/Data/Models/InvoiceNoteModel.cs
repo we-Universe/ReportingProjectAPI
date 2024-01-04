@@ -3,6 +3,6 @@
     public class InvoiceNoteModel
     {
         public int? InvoiceId { get; set; }
-        public string Content { get; set; } = string.Empty;
+        public string Content { get; set; } 
     }
 }
