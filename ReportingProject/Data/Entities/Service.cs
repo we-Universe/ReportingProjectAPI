@@ -15,6 +15,5 @@ namespace ReportingProject.Data.Entities
         public ServiceType? ServiceType { get; set; }
         public Contract? Contract { get; set; }
         public List<ServiceOperator> ServiceOperators { get; set; } = new List<ServiceOperator>();
-        public List<Revenue>? Revenues { get; set; }
     }
 }

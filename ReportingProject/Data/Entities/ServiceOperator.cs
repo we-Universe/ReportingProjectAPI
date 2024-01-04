@@ -4,6 +4,7 @@ namespace ReportingProject.Data.Entities
 {
     public class ServiceOperator
     {
+        public int Id { get; set; }
         public int? ServiceId { get; set; }
         public int? OperatorId { get; set; }
         public int MWRef { get; set; }
@@ -17,5 +18,6 @@ namespace ReportingProject.Data.Entities
         public Service? Service { get; set; }
         public Operator? Operator { get; set; }
         public ServiceStatus? ServiceStatus { get; set; }
+        public List<Revenue>? Revenues { get; set; } = new List<Revenue>();
     }
 }

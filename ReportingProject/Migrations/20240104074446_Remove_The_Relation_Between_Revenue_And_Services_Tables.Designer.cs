@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReportingProject.Data.Contextes;
 
@@ -11,9 +12,11 @@ using ReportingProject.Data.Contextes;
 namespace ReportingProject.Migrations
 {
     [DbContext(typeof(ReportingDBContext))]
-    partial class ReportingDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240104074446_Remove_The_Relation_Between_Revenue_And_Services_Tables")]
+    partial class Remove_The_Relation_Between_Revenue_And_Services_Tables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -966,9 +969,6 @@ namespace ReportingProject.Migrations
                     b.Property<decimal>("Refund")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("ServiceOperatorId")
-                        .HasColumnType("int");
-
                     b.Property<int>("TotalSubscriptions")
                         .HasColumnType("int");
 
@@ -979,8 +979,6 @@ namespace ReportingProject.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ServiceOperatorId");
 
                     b.HasIndex("Month", "Year");
 
@@ -1028,11 +1026,11 @@ namespace ReportingProject.Migrations
 
             modelBuilder.Entity("ReportingProject.Data.Entities.ServiceOperator", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int?>("ServiceId")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<int?>("OperatorId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("LaunchDate")
                         .HasColumnType("datetime2");
@@ -1041,9 +1039,6 @@ namespace ReportingProject.Migrations
                         .HasColumnType("varbinary(max)");
 
                     b.Property<int>("MWRef")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("OperatorId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("OperatorShare")
@@ -1055,20 +1050,15 @@ namespace ReportingProject.Migrations
                     b.Property<decimal>("PrePrice")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("ServiceId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("ServiceStatusId")
                         .HasColumnType("int");
 
                     b.Property<int?>("ShortCode")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("ServiceId", "OperatorId");
 
                     b.HasIndex("OperatorId");
-
-                    b.HasIndex("ServiceId");
 
                     b.HasIndex("ServiceStatusId");
 
@@ -1442,15 +1432,6 @@ namespace ReportingProject.Migrations
                     b.Navigation("Report");
                 });
 
-            modelBuilder.Entity("ReportingProject.Data.Entities.Revenue", b =>
-                {
-                    b.HasOne("ReportingProject.Data.Entities.ServiceOperator", "ServiceOperator")
-                        .WithMany("Revenues")
-                        .HasForeignKey("ServiceOperatorId");
-
-                    b.Navigation("ServiceOperator");
-                });
-
             modelBuilder.Entity("ReportingProject.Data.Entities.Service", b =>
                 {
                     b.HasOne("ReportingProject.Data.Entities.Contract", "Contract")
@@ -1476,11 +1457,15 @@ namespace ReportingProject.Migrations
                 {
                     b.HasOne("ReportingProject.Data.Entities.Operator", "Operator")
                         .WithMany("ServiceOperators")
-                        .HasForeignKey("OperatorId");
+                        .HasForeignKey("OperatorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ReportingProject.Data.Entities.Service", "Service")
                         .WithMany("ServiceOperators")
-                        .HasForeignKey("ServiceId");
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ReportingProject.Data.Entities.ServiceStatus", "ServiceStatus")
                         .WithMany("ServiceOperators")
@@ -1637,11 +1622,6 @@ namespace ReportingProject.Migrations
             modelBuilder.Entity("ReportingProject.Data.Entities.Service", b =>
                 {
                     b.Navigation("ServiceOperators");
-                });
-
-            modelBuilder.Entity("ReportingProject.Data.Entities.ServiceOperator", b =>
-                {
-                    b.Navigation("Revenues");
                 });
 
             modelBuilder.Entity("ReportingProject.Data.Entities.ServiceStatus", b =>

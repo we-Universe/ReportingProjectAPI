@@ -36,7 +36,7 @@ namespace ReportingProject.Repositories.MerchantReportRepository
                 from serviceType in serviceTypeGroup.DefaultIfEmpty()
                 join serviceOperator in _reportingDBContext.ServiceOperators on service.Id equals serviceOperator.ServiceId into serviceOperatorGroup
                 from serviceOperator in serviceOperatorGroup.DefaultIfEmpty()
-                join revenue in _reportingDBContext.Revenues on serviceOperator.ServiceId equals revenue.ServiceId into revenueGroup
+                join revenue in _reportingDBContext.Revenues on serviceOperator.Id equals revenue.ServiceOperatorId into revenueGroup//
                 from revenue in revenueGroup.DefaultIfEmpty()
                 where revenue.Year == year && revenue.Month == month
                 join operrator in _reportingDBContext.Operators on serviceOperator.OperatorId equals operrator.Id into operatorGroup

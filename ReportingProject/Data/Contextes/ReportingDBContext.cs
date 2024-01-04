@@ -35,7 +35,8 @@ namespace ReportingProject.Data.Contextes
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<ServiceOperator>()
-                .HasKey(so => new { so.ServiceId, so.OperatorId });
+                .Property(so => so.Id)
+                .ValueGeneratedOnAdd();
 
             modelBuilder.Entity<ServiceOperator>()
                 .HasOne(so => so.Service)
