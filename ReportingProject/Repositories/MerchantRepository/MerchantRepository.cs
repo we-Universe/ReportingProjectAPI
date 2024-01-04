@@ -35,7 +35,7 @@ namespace ReportingProject.Repositories.MerchantRepository
         public async Task<IEnumerable<string>> GetAllMerchantNamesAsync()
         {
             IEnumerable<string> merchantNames = await _reportingDBContext.Merchants
-                .Select(merchant => merchant.Employee.Name)
+                .Select(merchant => merchant.Consultant.Client.Company.Name)
                 .ToListAsync();
 
             return merchantNames;

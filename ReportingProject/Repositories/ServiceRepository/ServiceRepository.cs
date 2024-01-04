@@ -17,8 +17,8 @@ namespace ReportingProject.Repositories.ServiceRepository
 
         public async Task<int> GetServiceIdFromServiceNameAsync(string name)
         {
-            var serviceId = await _dbSet.FirstOrDefaultAsync(rt => rt.Name == name);
-            return serviceId == null ? throw new Exception("Service not found") : serviceId.Id;
+            var service = await _dbSet.FirstOrDefaultAsync(rt => rt.Name == name);
+            return service == null ? throw new Exception("Service not found") : service.Id;
         }
 
         public async Task<decimal> GetClientShareFromServiceNameAsync(string name)
@@ -31,15 +31,43 @@ namespace ReportingProject.Repositories.ServiceRepository
             return clientShare;
         }
 
-        public async Task<bool> IsOutsidePalestineAsync(string name)
+        public async Task<string> GetOperatorCountryFromServiceNameAsync(string name)
         {
-            var isOutsidePalestine = await _dbSet
+            var operatorCountry = await _dbSet
                 .Where(rt => rt.Name == name)
                 .Select(rt => rt.ServiceOperators
-                    .Any(so => so.Operator.Company.Country.Name != "Palestine"))
+                    .Select(so => so.Operator.Company.Country.Name)
+                    .FirstOrDefault())
                 .FirstOrDefaultAsync();
 
-            return isOutsidePalestine;
+            return operatorCountry;
+        }
+
+        public async Task<string> GetMerchantNameFromServiceNameAsync(string name)
+        {
+            var companyName = await _dbSet
+                .Where(service => service.Name == name)
+                .Select(service => service.Contract.Merchant.Consultant.Client.Company.Name)
+                .FirstOrDefaultAsync();
+
+            return companyName;
+        }
+
+        public async Task<decimal> GetConsultantShareFromServiceNameAsync(string name)
+        {
+            var service = await _dbSet.FirstOrDefaultAsync(rt => rt.Name == name);
+            return service == null ? throw new Exception("Service not found") : service.ConsultantShare;
+        }
+
+        public async Task<decimal> GetNonResidentialValueFromServiceName(string name)
+        {
+            var nonResidentialValue = await _dbSet
+                .Where(s => s.Name == name)
+                .SelectMany(s => s.ServiceOperators)
+                .Select(so => so.Operator.NonResidentialValue)
+                .FirstOrDefaultAsync();
+
+            return nonResidentialValue;
         }
     }
 }
