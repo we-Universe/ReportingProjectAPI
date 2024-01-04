@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ReportingProject.Services.CountryService;
 using ReportingProject.Services.MerchantReportService;
 
 namespace ReportingProject.Controllers
@@ -23,9 +22,9 @@ namespace ReportingProject.Controllers
         }
 
         [HttpGet("GenerateMerchantsReports")]
-        public IActionResult GenerateMerchantsReports()
+        public async Task <IActionResult> GenerateMerchantsReports()
         {
-            _merchantReportService.GenerateMerchantsReportsAsync();
+            await _merchantReportService.GenerateMerchantsReportsAsync();
             return Ok();
         }
 

@@ -5,6 +5,6 @@ namespace ReportingProject.Services.MerchantReportService
     public interface IMerchantReportService
     {
         Task<IEnumerable<MerchantReportResource>> GetAllMerchantsReportsAsync();
-        void GenerateMerchantsReportsAsync();
+        Task GenerateMerchantsReportsAsync();
     }
 }

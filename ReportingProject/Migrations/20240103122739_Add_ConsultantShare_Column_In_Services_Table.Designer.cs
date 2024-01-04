@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReportingProject.Data.Contextes;
 
@@ -11,9 +12,11 @@ using ReportingProject.Data.Contextes;
 namespace ReportingProject.Migrations
 {
     [DbContext(typeof(ReportingDBContext))]
-    partial class ReportingDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240103122739_Add_ConsultantShare_Column_In_Services_Table")]
+    partial class Add_ConsultantShare_Column_In_Services_Table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -245,7 +248,7 @@ namespace ReportingProject.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ApprovalStatuses", (string)null);
+                    b.ToTable("ApprovalStatuses");
                 });
 
             modelBuilder.Entity("ReportingProject.Data.Entities.Client", b =>
@@ -274,7 +277,7 @@ namespace ReportingProject.Migrations
                         .IsUnique()
                         .HasFilter("[CompanyId] IS NOT NULL");
 
-                    b.ToTable("Clients", (string)null);
+                    b.ToTable("Clients");
                 });
 
             modelBuilder.Entity("ReportingProject.Data.Entities.Company", b =>
@@ -321,7 +324,7 @@ namespace ReportingProject.Migrations
 
                     b.HasIndex("CurrencyId");
 
-                    b.ToTable("Companies", (string)null);
+                    b.ToTable("Companies");
                 });
 
             modelBuilder.Entity("ReportingProject.Data.Entities.CompanyEmail", b =>
@@ -355,7 +358,7 @@ namespace ReportingProject.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.ToTable("CompanyEmails", (string)null);
+                    b.ToTable("CompanyEmails");
                 });
 
             modelBuilder.Entity("ReportingProject.Data.Entities.Consultant", b =>
@@ -375,7 +378,7 @@ namespace ReportingProject.Migrations
                         .IsUnique()
                         .HasFilter("[ClientId] IS NOT NULL");
 
-                    b.ToTable("Consultants", (string)null);
+                    b.ToTable("Consultants");
                 });
 
             modelBuilder.Entity("ReportingProject.Data.Entities.Contract", b =>
@@ -412,7 +415,7 @@ namespace ReportingProject.Migrations
 
                     b.HasIndex("MerchantId");
 
-                    b.ToTable("Contracts", (string)null);
+                    b.ToTable("Contracts");
                 });
 
             modelBuilder.Entity("ReportingProject.Data.Entities.Country", b =>
@@ -433,7 +436,7 @@ namespace ReportingProject.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Countries", (string)null);
+                    b.ToTable("Countries");
                 });
 
             modelBuilder.Entity("ReportingProject.Data.Entities.Currency", b =>
@@ -454,7 +457,7 @@ namespace ReportingProject.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Currencies", (string)null);
+                    b.ToTable("Currencies");
                 });
 
             modelBuilder.Entity("ReportingProject.Data.Entities.Employee", b =>
@@ -485,7 +488,7 @@ namespace ReportingProject.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Employees", (string)null);
+                    b.ToTable("Employees");
                 });
 
             modelBuilder.Entity("ReportingProject.Data.Entities.FinancialAccount", b =>
@@ -544,7 +547,7 @@ namespace ReportingProject.Migrations
 
                     b.HasIndex("CountryId");
 
-                    b.ToTable("FinancialAccounts", (string)null);
+                    b.ToTable("FinancialAccounts");
                 });
 
             modelBuilder.Entity("ReportingProject.Data.Entities.IndustryType", b =>
@@ -561,7 +564,7 @@ namespace ReportingProject.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("IndustryTypes", (string)null);
+                    b.ToTable("IndustryTypes");
                 });
 
             modelBuilder.Entity("ReportingProject.Data.Entities.Invoice", b =>
@@ -609,7 +612,7 @@ namespace ReportingProject.Migrations
 
                     b.HasIndex("Month", "Year");
 
-                    b.ToTable("Invoices", (string)null);
+                    b.ToTable("Invoices");
                 });
 
             modelBuilder.Entity("ReportingProject.Data.Entities.InvoiceNote", b =>
@@ -631,7 +634,7 @@ namespace ReportingProject.Migrations
 
                     b.HasIndex("InvoiceId");
 
-                    b.ToTable("InvoiceNotes", (string)null);
+                    b.ToTable("InvoiceNotes");
                 });
 
             modelBuilder.Entity("ReportingProject.Data.Entities.InvoiceStatus", b =>
@@ -648,7 +651,7 @@ namespace ReportingProject.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("InvoiceStatuses", (string)null);
+                    b.ToTable("InvoiceStatuses");
                 });
 
             modelBuilder.Entity("ReportingProject.Data.Entities.Merchant", b =>
@@ -671,7 +674,7 @@ namespace ReportingProject.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("Merchants", (string)null);
+                    b.ToTable("Merchants");
                 });
 
             modelBuilder.Entity("ReportingProject.Data.Entities.MerchantInvoice", b =>
@@ -708,7 +711,7 @@ namespace ReportingProject.Migrations
 
                     b.HasIndex("MerchantId");
 
-                    b.ToTable("MerchantInvoices", (string)null);
+                    b.ToTable("MerchantInvoices");
                 });
 
             modelBuilder.Entity("ReportingProject.Data.Entities.MerchantReport", b =>
@@ -733,7 +736,7 @@ namespace ReportingProject.Migrations
                         .IsUnique()
                         .HasFilter("[ReportId] IS NOT NULL");
 
-                    b.ToTable("MerchantReports", (string)null);
+                    b.ToTable("MerchantReports");
                 });
 
             modelBuilder.Entity("ReportingProject.Data.Entities.Notification", b =>
@@ -771,7 +774,7 @@ namespace ReportingProject.Migrations
 
                     b.HasIndex("SenderId");
 
-                    b.ToTable("Notifications", (string)null);
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("ReportingProject.Data.Entities.NotificationType", b =>
@@ -788,7 +791,7 @@ namespace ReportingProject.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("NotificationTypes", (string)null);
+                    b.ToTable("NotificationTypes");
                 });
 
             modelBuilder.Entity("ReportingProject.Data.Entities.Operator", b =>
@@ -829,7 +832,7 @@ namespace ReportingProject.Migrations
                         .IsUnique()
                         .HasFilter("[CompanyId] IS NOT NULL");
 
-                    b.ToTable("Operators", (string)null);
+                    b.ToTable("Operators");
                 });
 
             modelBuilder.Entity("ReportingProject.Data.Entities.OperatorReport", b =>
@@ -866,7 +869,7 @@ namespace ReportingProject.Migrations
                         .IsUnique()
                         .HasFilter("[ReportId] IS NOT NULL");
 
-                    b.ToTable("OperatorReports", (string)null);
+                    b.ToTable("OperatorReports");
                 });
 
             modelBuilder.Entity("ReportingProject.Data.Entities.Report", b =>
@@ -904,7 +907,7 @@ namespace ReportingProject.Migrations
 
                     b.HasIndex("Month", "Year");
 
-                    b.ToTable("Reports", (string)null);
+                    b.ToTable("Reports");
                 });
 
             modelBuilder.Entity("ReportingProject.Data.Entities.ReportNote", b =>
@@ -926,7 +929,7 @@ namespace ReportingProject.Migrations
 
                     b.HasIndex("ReportId");
 
-                    b.ToTable("ReportNotes", (string)null);
+                    b.ToTable("ReportNotes");
                 });
 
             modelBuilder.Entity("ReportingProject.Data.Entities.ReportType", b =>
@@ -943,7 +946,7 @@ namespace ReportingProject.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ReportTypes", (string)null);
+                    b.ToTable("ReportTypes");
                 });
 
             modelBuilder.Entity("ReportingProject.Data.Entities.Revenue", b =>
@@ -984,7 +987,7 @@ namespace ReportingProject.Migrations
 
                     b.HasIndex("Month", "Year");
 
-                    b.ToTable("Revenues", (string)null);
+                    b.ToTable("Revenues");
                 });
 
             modelBuilder.Entity("ReportingProject.Data.Entities.Service", b =>
@@ -1023,7 +1026,7 @@ namespace ReportingProject.Migrations
 
                     b.HasIndex("ServiceTypeId");
 
-                    b.ToTable("Services", (string)null);
+                    b.ToTable("Services");
                 });
 
             modelBuilder.Entity("ReportingProject.Data.Entities.ServiceOperator", b =>
@@ -1064,7 +1067,7 @@ namespace ReportingProject.Migrations
 
                     b.HasIndex("ServiceStatusId");
 
-                    b.ToTable("ServiceOperators", (string)null);
+                    b.ToTable("ServiceOperators");
                 });
 
             modelBuilder.Entity("ReportingProject.Data.Entities.ServiceStatus", b =>
@@ -1081,7 +1084,7 @@ namespace ReportingProject.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ServiceStatuses", (string)null);
+                    b.ToTable("ServiceStatuses");
                 });
 
             modelBuilder.Entity("ReportingProject.Data.Entities.ServiceType", b =>
@@ -1098,7 +1101,7 @@ namespace ReportingProject.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ServiceTypes", (string)null);
+                    b.ToTable("ServiceTypes");
                 });
 
             modelBuilder.Entity("ReportingProject.Data.Entities.UniverseInvoice", b =>
@@ -1126,7 +1129,7 @@ namespace ReportingProject.Migrations
 
                     b.HasIndex("OperatorId");
 
-                    b.ToTable("UniverseInvoices", (string)null);
+                    b.ToTable("UniverseInvoices");
                 });
 
             modelBuilder.Entity("ReportingProject.Data.Entities.UserSession", b =>
@@ -1164,7 +1167,7 @@ namespace ReportingProject.Migrations
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.ToTable("UserSessions", (string)null);
+                    b.ToTable("UserSessions");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
