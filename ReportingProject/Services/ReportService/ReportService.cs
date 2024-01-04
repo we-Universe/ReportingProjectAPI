@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DocumentFormat.OpenXml.Bibliography;
 using ReportingProject.Data.Entities;
 using ReportingProject.Data.Models;
 using ReportingProject.Data.Resources;
@@ -26,6 +27,8 @@ namespace ReportingProject.Services.ReportService
             try
             {
                 var reportEntity = _mapper.Map<Report>(model);
+                reportEntity.ReportNotes = _mapper.Map<List<ReportNote>>(model.Notes);
+                reportEntity.ReportNotes.ForEach(note => note.ReportId = reportEntity.Id);
                 await _reportRepository.UploadReportAsync(reportEntity);
 
                 var operatorReport = new OperatorReportsModel
@@ -64,11 +67,6 @@ namespace ReportingProject.Services.ReportService
             throw new NotImplementedException();
         }
 
-        public Task UpdateReportAsync(Report entity)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<IEnumerable<ReportResource>> GetReportByReportIdAsync(int reportId)
         {
             var reportsEntities = await _reportRepository.GetReportByReportIdAsync(reportId);
@@ -99,8 +97,25 @@ namespace ReportingProject.Services.ReportService
             {
                 var reportEntity = await _reportRepository.GetReportByIdAsync(model.Id);
                 reportEntity = _mapper.Map(model, reportEntity);
+
+                reportEntity.ReportNotes = _mapper.Map<List<ReportNote>>(model.Notes);
+                reportEntity.ReportNotes.ForEach(note => note.ReportId = reportEntity.Id);
+
                 await _reportRepository.UpdateReportAsync(reportEntity);
-                var operatorReportEntity = await _reportOperatorRepository.GetOperatorReportByReportIdAsync(model.Id);
+                int id = await _reportOperatorRepository.GetOperatorIdFromReportIdAsync(model.Id);
+
+                var operatorReportModel = new OperatorReportsModel
+                {
+                    Id = id,
+                    ReportId = model.Id,
+                    OperatorId =model.OperatorId,
+                    IMIFile = model.IMIFile,
+                    DifferencesFile = model.DifferencesFile,
+                    MWFile = model.MWFile,
+                    RefundFile = model.RefundFile
+                };
+
+                var operatorReportEntity = _mapper.Map<OperatorReport>(operatorReportModel);
                 await _reportOperatorRepository.UpdateReportAsync(operatorReportEntity);
             }
             catch (Exception ex)

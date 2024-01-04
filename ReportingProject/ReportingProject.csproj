@@ -29,6 +29,8 @@
     </PackageReference>
     <PackageReference Include="PasswordGenerator" Version="2.1.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="EPPlus" Version="7.0.5" />
+    <PackageReference Include="Microsoft.Office.Interop.Excel" Version="15.0.4795.1001" />
   </ItemGroup>
 
   <ItemGroup>
@@ -39,6 +41,14 @@
     <None Remove="Repositories\OperatorRepository\" />
     <None Remove="Services\OperatorService\" />
     <None Remove="Repositories\MerchantReportRepository\" />
+    <None Remove="Services\ContractService\" />
+    <None Remove="Repositories\ContractRepository\" />
+    <None Remove="Services\MerchantService\" />
+    <None Remove="Repositories\MerchantRepository\" />
+    <None Remove="Services\RevenueService\" />
+    <None Remove="Repositories\RevenueRepository\" />
+    <None Remove="Services\ServiceService\" />
+    <None Remove="Repositories\ServiceRepository\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\OperatorReportService\" />
@@ -48,5 +58,13 @@
     <Folder Include="Repositories\OperatorRepository\" />
     <Folder Include="Services\OperatorService\" />
     <Folder Include="Repositories\MerchantReportRepository\" />
+    <Folder Include="Services\ContractService\" />
+    <Folder Include="Repositories\ContractRepository\" />
+    <Folder Include="Services\MerchantService\" />
+    <Folder Include="Repositories\MerchantRepository\" />
+    <Folder Include="Services\RevenueService\" />
+    <Folder Include="Repositories\RevenueRepository\" />
+    <Folder Include="Services\ServiceService\" />
+    <Folder Include="Repositories\ServiceRepository\" />
   </ItemGroup>
 </Project>

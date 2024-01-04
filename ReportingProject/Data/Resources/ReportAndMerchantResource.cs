@@ -1,11 +1,13 @@
-﻿namespace ReportingProject.Data.Resources
+﻿using ReportingProject.Data.Entities;
+
+namespace ReportingProject.Data.Resources
 {
 	public class ReportAndMerchantResource
     {
         public int Id { get; set; }
         public string Type { get; set; } = string.Empty;
         public byte[]? File { get; set; }
-        public List<Note> Notes { get; set; } = new List<Note>();
+        public List<ReportNote> Notes { get; set; } = new List<ReportNote>();
         public int Approved { get; set; }
         public int Month { get; set; }
         public int Year { get; set; }

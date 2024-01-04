@@ -45,5 +45,11 @@ namespace ReportingProject.Services.OperatorReportService
         {
             await _reportRepository.DeleteReportAsync(id);
         }
+
+        public async Task<int> GetOperatorIFromReportIdAsync(int reportId)
+        {
+            int operatorId = await _reportRepository.GetOperatorIdFromReportIdAsync(reportId);
+            return operatorId;
+        }
     }
 }

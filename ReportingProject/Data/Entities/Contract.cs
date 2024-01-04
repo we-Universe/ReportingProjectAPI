@@ -13,5 +13,4 @@
         public Merchant? Merchant { get; set; }
         public Service? Service { get; set; }
     }
-
 }

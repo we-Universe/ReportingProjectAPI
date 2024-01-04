@@ -23,7 +23,15 @@ using ReportingProject.Services.ApprovalStatusesService;
 using ReportingProject.Services.OperatorService;
 using ReportingProject.Repositories.OperatorRepository;
 using ReportingProject.Repositories.MerchantReportRepository;
+using ReportingProject.Repositories.ContractRepository;
+using ReportingProject.Services.ContractService;
+using ReportingProject.Services.MerchantService;
+using ReportingProject.Repositories.MerchantRepository;
 using ReportingProject.Services.MerchantReportService;
+using ReportingProject.Services.RevenueService;
+using ReportingProject.Repositories.RevenueRepository;
+using ReportingProject.Repositories.ServiceRepository;
+using ReportingProject.Services.ServiceService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -91,6 +99,15 @@ builder.Services.AddScoped<IApprovalStatusesService, ApprovalStatusesService>();
 builder.Services.AddScoped<IApprovalStatusesRepository, ApprovalStatusesRepository>();
 builder.Services.AddScoped<IOperatorService, OperatorService>();
 builder.Services.AddScoped<IOperatorRepository, OperatorRepository>();
+builder.Services.AddScoped<IMerchantReportRepository, MerchantReportRepository>();
+builder.Services.AddScoped<IContractService, ContractService>();
+builder.Services.AddScoped<IContractRepository, ContractRepository>();
+builder.Services.AddScoped<IMerchantService, MerchantService>();
+builder.Services.AddScoped<IMerchantRepository, MerchantRepository>();
+builder.Services.AddScoped<IRevenueService, RevenueService>();
+builder.Services.AddScoped<IRevenueRepository, RevenueRepository>();
+builder.Services.AddScoped<IServiceService, ServiceService>();
+builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

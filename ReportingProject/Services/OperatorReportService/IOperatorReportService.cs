@@ -13,5 +13,6 @@ namespace ReportingProject.Services.OperatorReportService
         Task UploadOperatorReportAsync(OperatorReportsModel model);
         Task UpdateReportAsync(OperatorReport entity);
         Task DeleteReportAsync(int id);
+        Task<int> GetOperatorIFromReportIdAsync(int reportId);
     }
 }
