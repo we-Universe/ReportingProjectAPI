@@ -54,12 +54,16 @@ namespace ReportingProject.Services.RevenueService
                         if (serviceName == "")
                             break;
                         decimal clientShare = await _serviceRepository.GetClientShareFromServiceNameAsync(serviceName);
-                        bool isOutsidePalestineAsync = await _serviceRepository.IsOutsidePalestineAsync(serviceName);
+                        string operatorCountry = await _serviceRepository.GetOperatorCountryFromServiceNameAsync(serviceName);
+                        string merchantCountry = await _serviceRepository.GetMerchantNameFromServiceNameAsync(serviceName);
+                        decimal nonResidentialValue = await _serviceRepository.GetNonResidentialValueFromServiceName(serviceName);
                         int serviceId = await _serviceRepository.GetServiceIdFromServiceNameAsync(serviceName.ToString());
                         int TotalSubscriptions = (int)worksheet.Cell(row, 9).Value + (int)worksheet.Cell(row, 10).Value;
                         int PostSubscriptions = (int)worksheet.Cell(row, 10).Value;
-                        decimal merchantRevenue = (int)worksheet.Cell(row, 13).Value * clientShare * (isOutsidePalestineAsync ? 0.9m : 1.0m);
-                        decimal universeRevenue = (int)worksheet.Cell(row, 13).Value * (1-clientShare);
+                        var revenue = decimal.TryParse(worksheet.Cell(row, 13).Value.ToString(), out var result) ? result : 0;
+                        decimal merchantRevenue = revenue * clientShare * ((operatorCountry != merchantCountry) ? nonResidentialValue : 1.0m);
+                        decimal consultantShare = await _serviceRepository.GetConsultantShareFromServiceNameAsync(serviceName);
+                        decimal universeRevenue = revenue * (1-clientShare) * consultantShare;
 
                         var revenueModel = new RevenueModel
                         {
@@ -83,12 +87,16 @@ namespace ReportingProject.Services.RevenueService
                         if (serviceName == "")
                             break;
                         decimal clientShare = await _serviceRepository.GetClientShareFromServiceNameAsync(serviceName);
-                        bool isOutsidePalestineAsync = await _serviceRepository.IsOutsidePalestineAsync(serviceName);
-                        int serviceId = await _serviceRepository.GetServiceIdFromServiceNameAsync(serviceName.ToString());
+                        int serviceId = await _serviceRepository.GetServiceIdFromServiceNameAsync(serviceName);
                         var TotalSubscriptions = (int)worksheet_2.Cell(row, 10).Value;
                         var PostSubscriptions = (int)worksheet_2.Cell(row, 9).Value;
-                        decimal merchantRevenue = (int)worksheet.Cell(row, 13).Value * clientShare * (isOutsidePalestineAsync ? 0.9m : 1.0m);
-                        decimal universeRevenue = (int)worksheet.Cell(row, 13).Value * (1 - clientShare);
+                        var revenue = decimal.TryParse(worksheet.Cell(row, 13).Value.ToString(), out var result) ? result : 0;
+                        string operatorCountry = await _serviceRepository.GetOperatorCountryFromServiceNameAsync(serviceName);
+                        string merchantCountry = await _serviceRepository.GetMerchantNameFromServiceNameAsync(serviceName);
+                        decimal nonResidentialValue = await _serviceRepository.GetNonResidentialValueFromServiceName(serviceName);
+                        decimal merchantRevenue = revenue * clientShare * ((operatorCountry != merchantCountry) ? nonResidentialValue : 1.0m);
+                        decimal consultantShare = await _serviceRepository.GetConsultantShareFromServiceNameAsync(serviceName);
+                        decimal universeRevenue = revenue * (1 - clientShare) * consultantShare;
 
                         var revenueModel = new RevenueModel
                         {
@@ -139,14 +147,18 @@ namespace ReportingProject.Services.RevenueService
                             break;
 
                         decimal clientShare = await _serviceRepository.GetClientShareFromServiceNameAsync(serviceName);
-                        bool isOutsidePalestineAsync = await _serviceRepository.IsOutsidePalestineAsync(serviceName);
                         if (serviceRefundDictionary.TryGetValue(serviceName, out decimal tempRefundValue))
                         {
                             var refundValue = tempRefundValue;
                             var TotalSubscriptions = (int)worksheet_3.Cell(row, 5).Value;
                             int serviceId = await _serviceRepository.GetServiceIdFromServiceNameAsync(serviceName.ToString());
-                            decimal merchantRevenue = ((int)worksheet.Cell(row, 9).Value- refundValue) * clientShare * (isOutsidePalestineAsync ? 0.9m : 1.0m);
-                            decimal universeRevenue = ((int)worksheet.Cell(row, 9).Value - refundValue) * (1 - clientShare);
+                            var revenue = decimal.TryParse(worksheet.Cell(row, 9).Value.ToString(), out var result) ? result : 0;
+                            string operatorCountry = await _serviceRepository.GetOperatorCountryFromServiceNameAsync(serviceName);
+                            string merchantCountry = await _serviceRepository.GetMerchantNameFromServiceNameAsync(serviceName);
+                            decimal nonResidentialValue = await _serviceRepository.GetNonResidentialValueFromServiceName(serviceName);
+                            decimal merchantRevenue = (revenue - refundValue) * clientShare * ((operatorCountry!=merchantCountry) ? nonResidentialValue : 1.0m);
+                            decimal consultantShare = await _serviceRepository.GetConsultantShareFromServiceNameAsync(serviceName);
+                            decimal universeRevenue = (revenue - refundValue) * (1 - clientShare) * consultantShare;
 
                             var revenueModel = new RevenueModel
                             {

@@ -18,8 +18,8 @@ namespace ReportingProject.Controllers
         [HttpGet("GetAllOperatorReports")]
         public async Task<IActionResult> GetAllOperatorReports()
         {
-            var reports = await _OperatorReportService.GetAllReportsAsync();
-            return Ok(reports);
+            var operatorReports = await _OperatorReportService.GetAllReportsAsync();
+            return Ok(operatorReports);
         }
     }
 }

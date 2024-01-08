@@ -27,6 +27,5 @@ namespace ReportingProject.Controllers
             await _merchantReportService.GenerateMerchantsReportsAsync();
             return Ok();
         }
-
     }
 }
