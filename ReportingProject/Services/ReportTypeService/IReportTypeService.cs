@@ -11,5 +11,6 @@ namespace ReportingProject.Services.ReportTypeService
         Task UpdateReportTypeAsync(ReportType entity);
         Task DeleteReportTypeAsync(int id);
         Task<int> GetReportTypeIdFromNameAsync(string name);
+        Task<IEnumerable<string>> GetAllReportTypeNamesAsync();
     }
 }

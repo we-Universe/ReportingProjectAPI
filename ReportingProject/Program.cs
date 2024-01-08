@@ -25,6 +25,17 @@ using ReportingProject.Services.ApprovalStatusesService;
 using ReportingProject.Services.OperatorService;
 using ReportingProject.Repositories.OperatorRepository;
 using ReportingProject.Helpers.MergeExcelHelper;
+using ReportingProject.Repositories.MerchantReportRepository;
+using ReportingProject.Repositories.ContractRepository;
+using ReportingProject.Services.ContractService;
+using ReportingProject.Services.MerchantService;
+using ReportingProject.Repositories.MerchantRepository;
+using ReportingProject.Services.MerchantReportService;
+using ReportingProject.Services.RevenueService;
+using ReportingProject.Repositories.RevenueRepository;
+using ReportingProject.Repositories.ServiceRepository;
+using ReportingProject.Services.ServiceService;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -82,6 +93,8 @@ builder.Services.AddScoped<ICountryService, CountryService>();
 builder.Services.AddScoped<ICountryRepository, CountryRepository>();
 builder.Services.AddScoped<IReportTypeService, ReportTypeService>();
 builder.Services.AddScoped<IReportRepository, ReportRepository>();
+builder.Services.AddScoped<IMerchantReportRepository, MerchantReportRepository>();
+builder.Services.AddScoped<IMerchantReportService, MerchantReportService>();
 builder.Services.AddScoped<IReportTypeRepository, ReportTypeRepository>();
 builder.Services.AddScoped<IOperatorReportRepository, OperatorReportRepository>();
 builder.Services.AddScoped<IInvoiceService, InvoiceService>();
@@ -92,6 +105,16 @@ builder.Services.AddScoped<IApprovalStatusesRepository, ApprovalStatusesReposito
 builder.Services.AddScoped<IOperatorService, OperatorService>();
 builder.Services.AddScoped<IOperatorRepository, OperatorRepository>();
 builder.Services.AddScoped<IMergeExcelHelper, MergeExcelHelper>();
+builder.Services.AddScoped<IMerchantReportRepository, MerchantReportRepository>();
+builder.Services.AddScoped<IContractService, ContractService>();
+builder.Services.AddScoped<IContractRepository, ContractRepository>();
+builder.Services.AddScoped<IMerchantService, MerchantService>();
+builder.Services.AddScoped<IMerchantRepository, MerchantRepository>();
+builder.Services.AddScoped<IRevenueService, RevenueService>();
+builder.Services.AddScoped<IRevenueRepository, RevenueRepository>();
+builder.Services.AddScoped<IServiceService, ServiceService>();
+builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

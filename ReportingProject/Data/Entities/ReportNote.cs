@@ -7,5 +7,4 @@
         public string Content { get; set; } = string.Empty;
         public Report? Report { get; set; }
     }
-
 }

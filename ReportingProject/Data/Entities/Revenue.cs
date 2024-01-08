@@ -6,7 +6,7 @@ namespace ReportingProject.Data.Entities
     public class Revenue
     {
         public int Id { get; set; }
-        public int? ServiceId { get; set; }
+        public int? ServiceOperatorId { get; set; }
         public int Month { get; set; }
         public int Year { get; set; }
         public int TotalSubscriptions { get; set; }
@@ -14,7 +14,6 @@ namespace ReportingProject.Data.Entities
         public decimal Refund { get; set; }
         public decimal MerchantRevenue { get; set; }
         public decimal UniverseRevenue { get; set; }
-        public Service? Service { get; set; }
+        public ServiceOperator? ServiceOperator { get; set; }
     }
-
 }

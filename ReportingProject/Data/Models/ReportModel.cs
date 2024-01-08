@@ -4,6 +4,8 @@ namespace ReportingProject.Data.Models
 {
 	public class ReportModel
 	{
+        public int Id { get; set; }
+
         [Required]
         public int ReportTypeId { get; set; }
 
@@ -27,5 +29,7 @@ namespace ReportingProject.Data.Models
         public byte[]? MWFile { get; set; }
 
         public byte[]? RefundFile { get; set; }
+
+        public List<NoteModel> Notes { get; set; } = new List<NoteModel>();
     }
 }

@@ -392,6 +392,9 @@ namespace ReportingProject.Migrations
                     b.Property<byte[]>("ContractFile")
                         .HasColumnType("varbinary(max)");
 
+                    b.Property<int>("ContractRef")
+                        .HasColumnType("int");
+
                     b.Property<int?>("MerchantId")
                         .HasColumnType("int");
 
@@ -659,22 +662,14 @@ namespace ReportingProject.Migrations
                     b.Property<int?>("ConsultantId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("EmloyeeId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("EmployeeID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("IndustryTypeId")
+                    b.Property<int?>("EmployeeId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ConsultantId");
 
-                    b.HasIndex("EmployeeID");
-
-                    b.HasIndex("IndustryTypeId");
+                    b.HasIndex("EmployeeId");
 
                     b.ToTable("Merchants");
                 });
@@ -971,7 +966,7 @@ namespace ReportingProject.Migrations
                     b.Property<decimal>("Refund")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("ServiceId")
+                    b.Property<int?>("ServiceOperatorId")
                         .HasColumnType("int");
 
                     b.Property<int>("TotalSubscriptions")
@@ -985,7 +980,7 @@ namespace ReportingProject.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ServiceId");
+                    b.HasIndex("ServiceOperatorId");
 
                     b.HasIndex("Month", "Year");
 
@@ -1000,12 +995,18 @@ namespace ReportingProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<decimal>("ConsultantShare")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<int?>("ContractId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IndustryTypeId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int?>("ServiceTypeId")
                         .HasColumnType("int");
@@ -1016,6 +1017,10 @@ namespace ReportingProject.Migrations
                         .IsUnique()
                         .HasFilter("[ContractId] IS NOT NULL");
 
+                    b.HasIndex("IndustryTypeId");
+
+                    b.HasIndex("Name");
+
                     b.HasIndex("ServiceTypeId");
 
                     b.ToTable("Services");
@@ -1023,11 +1028,11 @@ namespace ReportingProject.Migrations
 
             modelBuilder.Entity("ReportingProject.Data.Entities.ServiceOperator", b =>
                 {
-                    b.Property<int?>("ServiceId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("OperatorId")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("LaunchDate")
                         .HasColumnType("datetime2");
@@ -1036,6 +1041,9 @@ namespace ReportingProject.Migrations
                         .HasColumnType("varbinary(max)");
 
                     b.Property<int>("MWRef")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("OperatorId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("OperatorShare")
@@ -1047,15 +1055,20 @@ namespace ReportingProject.Migrations
                     b.Property<decimal>("PrePrice")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int?>("ServiceId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("ServiceStatusId")
                         .HasColumnType("int");
 
                     b.Property<int?>("ShortCode")
                         .HasColumnType("int");
 
-                    b.HasKey("ServiceId", "OperatorId");
+                    b.HasKey("Id");
 
                     b.HasIndex("OperatorId");
+
+                    b.HasIndex("ServiceId");
 
                     b.HasIndex("ServiceStatusId");
 
@@ -1317,17 +1330,11 @@ namespace ReportingProject.Migrations
 
                     b.HasOne("ReportingProject.Data.Entities.Employee", "Employee")
                         .WithMany("Merchants")
-                        .HasForeignKey("EmployeeID");
-
-                    b.HasOne("ReportingProject.Data.Entities.IndustryType", "IndustryType")
-                        .WithMany("Merchants")
-                        .HasForeignKey("IndustryTypeId");
+                        .HasForeignKey("EmployeeId");
 
                     b.Navigation("Consultant");
 
                     b.Navigation("Employee");
-
-                    b.Navigation("IndustryType");
                 });
 
             modelBuilder.Entity("ReportingProject.Data.Entities.MerchantInvoice", b =>
@@ -1437,11 +1444,11 @@ namespace ReportingProject.Migrations
 
             modelBuilder.Entity("ReportingProject.Data.Entities.Revenue", b =>
                 {
-                    b.HasOne("ReportingProject.Data.Entities.Service", "Service")
+                    b.HasOne("ReportingProject.Data.Entities.ServiceOperator", "ServiceOperator")
                         .WithMany("Revenues")
-                        .HasForeignKey("ServiceId");
+                        .HasForeignKey("ServiceOperatorId");
 
-                    b.Navigation("Service");
+                    b.Navigation("ServiceOperator");
                 });
 
             modelBuilder.Entity("ReportingProject.Data.Entities.Service", b =>
@@ -1450,11 +1457,17 @@ namespace ReportingProject.Migrations
                         .WithOne("Service")
                         .HasForeignKey("ReportingProject.Data.Entities.Service", "ContractId");
 
+                    b.HasOne("ReportingProject.Data.Entities.IndustryType", "IndustryType")
+                        .WithMany("Services")
+                        .HasForeignKey("IndustryTypeId");
+
                     b.HasOne("ReportingProject.Data.Entities.ServiceType", "ServiceType")
                         .WithMany("Services")
                         .HasForeignKey("ServiceTypeId");
 
                     b.Navigation("Contract");
+
+                    b.Navigation("IndustryType");
 
                     b.Navigation("ServiceType");
                 });
@@ -1463,15 +1476,11 @@ namespace ReportingProject.Migrations
                 {
                     b.HasOne("ReportingProject.Data.Entities.Operator", "Operator")
                         .WithMany("ServiceOperators")
-                        .HasForeignKey("OperatorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OperatorId");
 
                     b.HasOne("ReportingProject.Data.Entities.Service", "Service")
                         .WithMany("ServiceOperators")
-                        .HasForeignKey("ServiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ServiceId");
 
                     b.HasOne("ReportingProject.Data.Entities.ServiceStatus", "ServiceStatus")
                         .WithMany("ServiceOperators")
@@ -1571,7 +1580,7 @@ namespace ReportingProject.Migrations
 
             modelBuilder.Entity("ReportingProject.Data.Entities.IndustryType", b =>
                 {
-                    b.Navigation("Merchants");
+                    b.Navigation("Services");
                 });
 
             modelBuilder.Entity("ReportingProject.Data.Entities.Invoice", b =>
@@ -1627,9 +1636,12 @@ namespace ReportingProject.Migrations
 
             modelBuilder.Entity("ReportingProject.Data.Entities.Service", b =>
                 {
-                    b.Navigation("Revenues");
-
                     b.Navigation("ServiceOperators");
+                });
+
+            modelBuilder.Entity("ReportingProject.Data.Entities.ServiceOperator", b =>
+                {
+                    b.Navigation("Revenues");
                 });
 
             modelBuilder.Entity("ReportingProject.Data.Entities.ServiceStatus", b =>

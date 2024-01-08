@@ -5,6 +5,6 @@ namespace ReportingProject.Services.ExcelService
 {
     public interface IExcelService
     {
-        public Task<MergedFileResource> MergeExcelFilesAsync(FileModel files);
+         Task<MergedFileResource> MergeExcelFilesAsync(FileModel files);
     }
 }

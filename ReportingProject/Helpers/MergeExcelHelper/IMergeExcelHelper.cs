@@ -5,17 +5,20 @@ namespace ReportingProject.Helpers.MergeExcelHelper
 {
     public interface IMergeExcelHelper
     {
-        public void AddWorksheetFromExcelFile(XLWorkbook targetWorkbook, IFormFile file, string sheetname);
-        public void CopyWorksheetData(IXLWorksheet sourceWorksheet, IXLWorksheet newWorksheet);
-        public  Task<Dictionary<string, ServiceData>> ReadPullFile(IFormFile file);
-        public  Task<(Dictionary<string, ServiceData>, PushFreeServices)> ReadPushFile(IFormFile file);
-        public IFormFile WritePushFile(Dictionary<string, ServiceData> pushData, PushFreeServices freeServicesData);
-        public IFormFile WritePullFile(Dictionary<string, ServiceData> pullData);
-        public IFormFile SaveWorkbook(XLWorkbook workbook);
-        public void SetHeaderStyle(IXLWorksheet worksheet);
-        public void SetSecondTableStyle(IXLWorksheet worksheet, int row);
-        public IFormFile WriteDCBFile(Dictionary<string, ServiceData> dcbData);
-        public  Task<Dictionary<string, ServiceData>> ReadDCBFile(IFormFile file); 
+         //void AddWorksheetFromExcelFile(XLWorkbook targetWorkbook, IFormFile file, string sheetname);
+         //void CopyWorksheetData(IXLWorksheet sourceWorksheet, IXLWorksheet newWorksheet);
+          Task<Dictionary<string, ServiceData>> ReadPullFile(IFormFile file);
+          Task<(Dictionary<string, ServiceData>, PushFreeServices)> ReadPushFile(IFormFile file);
+         //IFormFile WritePushFile(Dictionary<string, ServiceData> pushData, PushFreeServices freeServicesData);
+         //IFormFile WritePullFile(Dictionary<string, ServiceData> pullData);
+         //IFormFile SaveWorkbook(XLWorkbook workbook);
+         //void SetHeaderStyle(IXLWorksheet worksheet);
+         //void SetSecondTableStyle(IXLWorksheet worksheet, int row);
+        // IFormFile WriteDCBFile(Dictionary<string, ServiceData> dcbData);
+          Task<Dictionary<string, ServiceData>> ReadDCBFile(IFormFile file);
+        void WriteDCBFile(Dictionary<string, ServiceData> dcbData, XLWorkbook workbook);
+        void WritePushFile(Dictionary<string, ServiceData> pushData, PushFreeServices freeServicesData, XLWorkbook workbook);
+        void WritePullFile(Dictionary<string, ServiceData> pullData, XLWorkbook workbook);
 
     }
 }

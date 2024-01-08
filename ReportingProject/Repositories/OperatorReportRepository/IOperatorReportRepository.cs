@@ -9,5 +9,7 @@ namespace ReportingProject.Repositories.OperatorReportRepository
         Task UploadReportAsync(OperatorReport entity);
         Task UpdateReportAsync(OperatorReport entity);
         Task DeleteReportAsync(int id);
+        Task<OperatorReport> GetOperatorReportByReportIdAsync(int reportId);
+        Task<int> GetOperatorIdFromReportIdAsync(int reportId);
     }
 }

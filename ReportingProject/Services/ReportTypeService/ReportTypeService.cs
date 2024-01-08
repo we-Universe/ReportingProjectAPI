@@ -35,8 +35,14 @@ namespace ReportingProject.Services.ReportTypeService
         {
             int reportsTypeId = await _reportTypeRepository.GetReportTypeIdFromNameAsync(name);
             return reportsTypeId;
-        }      
+        }
 
+        public async Task<IEnumerable<string>> GetAllReportTypeNamesAsync()
+        {
+            var reportTypeNames = await _reportTypeRepository.GetAllReportTypeNamesAsync();
+            return reportTypeNames;
+        }
+        
         public Task<ReportType> GetReportTypeByIdAsync(int id)
         {
             throw new NotImplementedException();

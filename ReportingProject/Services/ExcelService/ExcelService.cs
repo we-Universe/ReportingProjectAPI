@@ -20,27 +20,31 @@ namespace ReportingProject.Services.ExcelService
         {
             try
             {
-                using (var workbook = new XLWorkbook())
+                string templateFilePath = "C:\\Users\\HP\\Downloads\\merged_file.xlsx";
+
+                using (var workbook = new XLWorkbook(templateFilePath))
                 {
-                    var (serviceDataDictionary, pushFreeServices) = await _mergeExcelHelper.ReadPushFile(files.PushFile);
-                    var pushFile = _mergeExcelHelper.WritePushFile(serviceDataDictionary, pushFreeServices);
+                    //var pullTask = ReadAndWritePullSheetAsync(files.PullFile, workbook);
+                    //var pushTask = ReadAndWritePushSheetAsync(files.PushFile, workbook);
+                    //var dcbTask = ReadAndWriteDCBSheetAsync(files.DcbFile, workbook);
+
+                    //await Task.WhenAll(pullTask, pushTask, dcbTask);
 
                     var pullDictionary = await _mergeExcelHelper.ReadPullFile(files.PullFile);
-                    var pullFile = _mergeExcelHelper.WritePullFile(pullDictionary);
+                    _mergeExcelHelper.WritePullFile(pullDictionary, workbook);
+
+                    var (serviceDataDictionary, pushFreeServices) = await _mergeExcelHelper.ReadPushFile(files.PushFile);
+                    _mergeExcelHelper.WritePushFile(serviceDataDictionary, pushFreeServices, workbook);
 
                     var dcbDictionary = await _mergeExcelHelper.ReadDCBFile(files.DcbFile);
-                    var dcbFile = _mergeExcelHelper.WriteDCBFile(dcbDictionary);
+                    _mergeExcelHelper.WriteDCBFile(dcbDictionary, workbook);
 
-                    _mergeExcelHelper.AddWorksheetFromExcelFile(workbook, pushFile, "push");
-                    _mergeExcelHelper.AddWorksheetFromExcelFile(workbook, pullFile, "pull");
-                    _mergeExcelHelper.AddWorksheetFromExcelFile(workbook, dcbFile, "DCB");
-                   
                     using (var stream = new MemoryStream())
                     {
                         workbook.SaveAs(stream);
 
                         var mergedFileBytes = stream.ToArray();
-                       
+
 
                         var mergedFileResource = new MergedFileResource
                         {
@@ -57,6 +61,25 @@ namespace ReportingProject.Services.ExcelService
                 throw;
             }
         }
+
+        //private async Task ReadAndWritePullSheetAsync(IFormFile pullFile, XLWorkbook workbook)
+        //{
+        //    var pullDictionary = await _mergeExcelHelper.ReadPullFile(pullFile);
+        //    _mergeExcelHelper.WritePullFile(pullDictionary, workbook);
+        //}
+
+        //private async Task ReadAndWritePushSheetAsync(IFormFile pushFile, XLWorkbook workbook)
+        //{
+        //    var (serviceDataDictionary, pushFreeServices) = await _mergeExcelHelper.ReadPushFile(pushFile);
+        //    _mergeExcelHelper.WritePushFile(serviceDataDictionary, pushFreeServices, workbook);
+        //}
+
+        //private async Task ReadAndWriteDCBSheetAsync(IFormFile dcbFile, XLWorkbook workbook)
+        //{
+        //    var dcbDictionary = await _mergeExcelHelper.ReadDCBFile(dcbFile);
+        //    _mergeExcelHelper.WriteDCBFile(dcbDictionary, workbook);
+        //}
+
 
     }
 }

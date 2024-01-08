@@ -4,6 +4,6 @@ namespace ReportingProject.Repositories.InvoiceRepository
 {
     public interface IInvoiceRepository
     {
-        public Task<bool> AddInvoiceReportAsync(Invoice invoice);
+         Task<bool> AddInvoiceReportAsync(Invoice invoice);
     }
 }
